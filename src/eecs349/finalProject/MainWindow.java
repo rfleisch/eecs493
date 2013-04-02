@@ -1,10 +1,19 @@
 package eecs349.finalProject;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class MainWindow extends JDialog
@@ -19,6 +28,7 @@ public class MainWindow extends JDialog
     
     createTitleNorth();
     createListWest();
+    createCenter();
     
     //window.setBackground(new Color(0,0,139));
     
@@ -46,36 +56,51 @@ public class MainWindow extends JDialog
     JPanel list = new JPanel();
     list.setBackground(Color.BLUE);
     list.setOpaque(true);
-    list.setLayout(new BoxLayout(list, BoxLayout.PAGE_AXIS));
-    list.setSize(150, 300);
-    JPanel favor = new JPanel();
-    favor.setPreferredSize(new Dimension(150, 1));
+    list.setLayout(new BoxLayout(list, BoxLayout.Y_AXIS));
+    //list.setSize(150, 300);
+    JPanel favorPanel = new JPanel();
+    //Image star = ((ImageIcon)ImageStore.applet_loadedImages.get("yellowStar.png")).getImage();
+    
+     //resizeImage(star,10,10);
+    ImageIcon star = new ImageIcon("smallStarYellow.png");
+    JPanel spacePan = new JPanel();
+    
+    JLabel starLabel = new JLabel(star);
+    //starLabel.setPreferredSize(new Dimension(10, 10));
+   
    
     JLabel fav = new JLabel("Favorite", JLabel.CENTER);
-    favor.setBackground(Color.YELLOW);
-    favor.setOpaque(true);
-    favor.add(fav);
-
+    fav.setFont(new Font("Arial", 1, 14));
+    fav.setHorizontalAlignment(4);
 
     
-    fav.setFont(new Font("Arial", 1, 14));
-    //fav.setBackground(Color.YELLOW);
-    //fav.setOpaque(true);
+    favorPanel.setLayout(new GridBagLayout());
+    //favorPanel.setPreferredSize(new Dimension(150, 1));
+    favorPanel.setBackground(Color.YELLOW);
+    favorPanel.setOpaque(true);
+    favorPanel.add(starLabel);
+    favorPanel.add(fav);
 
    
     JLabel football = new JLabel("Football", JLabel.CENTER);
+    football.setHorizontalAlignment(4);
     JLabel hockey = new JLabel("Hockey", JLabel.CENTER);
+    hockey.setHorizontalAlignment(4);
     
-    list.add(favor);
+    list.add(favorPanel);
     list.add(football);
     list.add(hockey);
-    setSize(700,500);
-    
     
     window.add(list, BorderLayout.WEST);
     
   }
   
+  public void createCenter() {
+    twitterUISetup twitter = new twitterUISetup();
+    
+    window.add(twitter, BorderLayout.CENTER);
+    
+  }
   
   
 }
