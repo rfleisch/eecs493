@@ -2,6 +2,7 @@
 # Java
 #################
 *.class
+twitter4j.properties
 
 # Package Files #
 #*.jar
