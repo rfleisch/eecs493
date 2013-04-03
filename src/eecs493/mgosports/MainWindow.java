@@ -1,35 +1,51 @@
 package eecs493.mgosports;
 
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class MainWindow extends JDialog
 {
   
   private JFrame window;
+  private JLabel fav;
+  private JLabel starLabelFoot;
+  private JLabel starLabelHock;
+  private JLabel starLabelBask;
+  private JLabel hockey;
+  private JLabel football;
+  private JLabel basketball;
+  private ImageIcon clearStar = new ImageIcon("clearStar.png");
+  private ImageIcon yellowStar = new ImageIcon("yellowStar.png");
+  private JPanel favPanel;
+  private JPanel footPanel;
+  private JPanel hockeyPanel;
+  private JPanel basketPanel;
+  private boolean favBask;
+  private boolean favHock;
+  private boolean favFoot;
+  private String selectedTab;
+  
+  
   
   public MainWindow() {
+    favBask = false;
+    favHock = false;
+    favFoot = false;
+    selectedTab = "favorite";
     
     window = new JFrame("MGoSports");
     window.setLayout(new BorderLayout());
     
     createTitleNorth();
-    createListWest();
+    createTabPanelWest();
     createCenter();
     
     //window.setBackground(new Color(0,0,139));
@@ -81,71 +97,201 @@ public class MainWindow extends JDialog
     
   }
   
-  private void createListWest() {
+  private void createTabPanelWest() {
     JPanel list = new JPanel();
     list.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
     list.setBackground(Color.BLUE);
     list.setOpaque(true);
-    list.setPreferredSize(new Dimension(100, 90));
+    list.setPreferredSize(new Dimension(110, 90));
     list.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
     
     
     //Favorite Tab
-    JPanel favPanel = new JPanel();
+    favPanel = new JPanel();
     favPanel.setBackground(Color.YELLOW);
-    favPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    favPanel.setPreferredSize(new Dimension(100, 30));
+    favPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+    favPanel.setPreferredSize(new Dimension(110, 30));
     
-    ImageIcon star = new ImageIcon("yellowStar.png");
-    JLabel starLabel = new JLabel(star);
-    favPanel.add(starLabel);
+    //ImageIcon star = new ImageIcon("yellowStar.png");
+    //starLabelFav = new JLabel(yellowStar);
+    //favPanel.add(starLabelFav);
     
-    JLabel fav = new JLabel("Favorite", JLabel.CENTER);
+    fav = new JLabel("Favorite", JLabel.CENTER);
+    fav.setFont(new Font("Arial", Font.BOLD, 14));
     fav.setHorizontalAlignment(4);
     favPanel.add(fav);
     
 
     //Football Tab
-    JPanel footPanel = new JPanel();
+    footPanel = new JPanel();
     footPanel.setBackground(Color.BLUE);
     footPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    footPanel.setPreferredSize(new Dimension(100, 30));
+    footPanel.setPreferredSize(new Dimension(110, 30));
     
-    ImageIcon starFoot = new ImageIcon("clearStar.png");
-    JLabel starLabelFoot = new JLabel(starFoot);
+    //ImageIcon starFoot = new ImageIcon("clearStar.png");
+    starLabelFoot = new JLabel(clearStar);
     footPanel.add(starLabelFoot);
     
-    JLabel football = new JLabel("Football", JLabel.CENTER);
+    football = new JLabel("Football", JLabel.CENTER);
+    football.setFont(new Font("Arial", Font.BOLD, 14));
     football.setHorizontalAlignment(4);
     footPanel.add(football);
     
     //Hockey Tab
-    JPanel hockeyPanel = new JPanel();
+    hockeyPanel = new JPanel();
     hockeyPanel.setBackground(Color.BLUE);
     hockeyPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    hockeyPanel.setPreferredSize(new Dimension(100,30));
+    hockeyPanel.setPreferredSize(new Dimension(110,30));
     
-    ImageIcon starHock = new ImageIcon("clearStar.png");
-    JLabel starLabelHock = new JLabel(starHock);
+    //ImageIcon starHock = new ImageIcon("clearStar.png");
+    starLabelHock = new JLabel(clearStar);
     hockeyPanel.add(starLabelHock);
     
-    JLabel hockey = new JLabel("Hockey", JLabel.CENTER);
+    hockey = new JLabel("Hockey", JLabel.CENTER);
+    hockey.setFont(new Font("Arial", Font.BOLD, 14));
     hockey.setHorizontalAlignment(4);
     hockeyPanel.add(hockey);
     
     //Basketball Tab
-    JPanel basketPanel = new JPanel();
+    basketPanel = new JPanel();
     basketPanel.setBackground(Color.BLUE);
     basketPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    basketPanel.setPreferredSize(new Dimension(100,30));
+    basketPanel.setPreferredSize(new Dimension(110,30));
     
-    ImageIcon starBask = new ImageIcon("clearStar.png");
-    JLabel starLabelBask = new JLabel(starBask);
+    //ImageIcon starBask = new ImageIcon("clearStar.png");
+    starLabelBask = new JLabel(clearStar);
     basketPanel.add(starLabelBask);
     
-    JLabel basket = new JLabel("Basketball", JLabel.CENTER);
-    basket.setHorizontalAlignment(4);
-    basketPanel.add(basket);
+    basketball = new JLabel("Basketball", JLabel.CENTER);
+    basketball.setFont(new Font("Arial", Font.BOLD, 14));
+    basketball.setHorizontalAlignment(4);
+    basketPanel.add(basketball);
+    
+    favPanel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+          System.out.println("favorite label");
+          favPanel.setBackground(Color.YELLOW);
+          footPanel.setBackground(Color.BLUE);
+          hockeyPanel.setBackground(Color.BLUE);
+          basketPanel.setBackground(Color.BLUE);
+          
+          favPanel.updateUI();
+          footPanel.updateUI();
+          hockeyPanel.updateUI();
+          basketPanel.updateUI();
+      }
+  });
+    
+    footPanel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+          System.out.println("favorite label");
+          favPanel.setBackground(Color.BLUE);
+          footPanel.setBackground(Color.YELLOW);
+          hockeyPanel.setBackground(Color.BLUE);
+          basketPanel.setBackground(Color.BLUE);
+          
+          favPanel.updateUI();
+          footPanel.updateUI();
+          hockeyPanel.updateUI();
+          basketPanel.updateUI();
+      }
+  });
+    
+    hockeyPanel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+          System.out.println("favorite label");
+          favPanel.setBackground(Color.BLUE);
+          footPanel.setBackground(Color.BLUE);
+          hockeyPanel.setBackground(Color.YELLOW);
+          basketPanel.setBackground(Color.BLUE);
+          
+          favPanel.updateUI();
+          footPanel.updateUI();
+          hockeyPanel.updateUI();
+          basketPanel.updateUI();
+      }
+  });
+    
+    basketPanel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+          System.out.println("favorite label");
+          favPanel.setBackground(Color.BLUE);
+          footPanel.setBackground(Color.BLUE);
+          hockeyPanel.setBackground(Color.BLUE);
+          basketPanel.setBackground(Color.YELLOW);
+          
+          favPanel.updateUI();
+          footPanel.updateUI();
+          hockeyPanel.updateUI();
+          basketPanel.updateUI();
+      }
+  });
+    
+    
+    
+    
+    
+    
+    starLabelFoot.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+          System.out.println("Football");
+          if(favFoot) {
+            System.out.println("to clear from yellow");
+            starLabelFoot.setIcon(clearStar);
+            favFoot = false;
+            
+          } else {
+            System.out.println("to yellow from clear");
+            starLabelFoot.setIcon(yellowStar);
+            favFoot = true;
+          }
+          starLabelFoot.updateUI();          
+      }
+  });
+    
+    
+    
+    
+    starLabelHock.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+          System.out.println("hockey");
+          if(favHock) {
+            System.out.println("to clear from yellow");
+            starLabelHock.setIcon(clearStar);
+            favHock = false;
+            
+          } else {
+            System.out.println("to yellow from clear");
+            starLabelHock.setIcon(yellowStar);
+            favHock = true;
+          }
+          starLabelHock.updateUI();          
+      }
+  });
+    
+    starLabelBask.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+          System.out.println("basket");
+          if(favBask) {
+            System.out.println("to clear from yellow");
+            starLabelBask.setIcon(clearStar);
+            favBask = false;
+            
+          } else {
+            System.out.println("to yellow from clear");
+            starLabelBask.setIcon(yellowStar);
+            favBask = true;
+          }
+           starLabelBask.updateUI();          
+      }
+  });
     
     
     list.add(favPanel);
@@ -163,7 +309,7 @@ public class MainWindow extends JDialog
     window.add(twitter, BorderLayout.CENTER);
     
   }
-  
-  
+ 
 }
+
 
