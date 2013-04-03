@@ -1,4 +1,4 @@
-package eecs349.finalProject;
+package eecs493.mgosports;
 
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
