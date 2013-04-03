@@ -1,5 +1,7 @@
 package eecs493.mgosports;
 
+import twitter4j.Twitter;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

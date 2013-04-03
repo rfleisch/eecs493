@@ -4,9 +4,9 @@
 *.class
 
 # Package Files #
-*.jar
-*.war
-*.ear
+#*.jar
+#*.war
+#*.ear
 
 #################
 ## Eclipse
@@ -15,7 +15,7 @@
 *.pydevproject
 # .project
 .metadata
-bin/
+bin/*
 tmp/
 *.tmp
 *.bak
