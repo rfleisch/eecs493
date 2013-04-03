@@ -4,7 +4,9 @@ import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -39,16 +41,43 @@ public class MainWindow extends JDialog
   }
   
   private void createTitleNorth() {
-    JLabel title = new JLabel("MGoSports", JLabel.CENTER);
+    JPanel titlePanel = new JPanel();
+    titlePanel.setLayout(new BorderLayout(10,10));
+    titlePanel.setPreferredSize(new Dimension(700, 100));
+    titlePanel.setBackground(Color.BLUE);
+    
+    ImageIcon Mlogo = new ImageIcon("mgosportslogo.png");
+    
+    Image img = Mlogo.getImage();
+    Image newimg = img.getScaledInstance(500, 80,  java.awt.Image.SCALE_SMOOTH);  
+    ImageIcon newIcon = new ImageIcon(newimg);  
+    
+     
+    JLabel title = new JLabel(newIcon);
     title.setBackground(Color.BLUE);
     title.setOpaque(true);
-    title.setFont(new Font("Impact", 1, 32));
-
+    titlePanel.add(title, BorderLayout.WEST);
+    title.setPreferredSize(new Dimension( 520, 100));
     
     
-    title.setAlignmentY(CENTER_ALIGNMENT);
+    JPanel twitterPanel = new JPanel();
+    twitterPanel.setPreferredSize(new Dimension(60, 100));
+    twitterPanel.setBackground(Color.BLUE);
     
-    window.add(title, BorderLayout.NORTH);
+    ImageIcon birdIcon = new ImageIcon("twitterBlueBird.png");
+    JLabel bird = new JLabel(birdIcon);
+    
+    JLabel login = new JLabel("Login");
+    login.setForeground(Color.WHITE);
+    login.setFont(new Font("Arial", Font.BOLD, 12));
+    
+    twitterPanel.add(bird);
+    twitterPanel.add(login);
+    
+    titlePanel.add(twitterPanel, BorderLayout.EAST);    
+    titlePanel.setAlignmentX(LEFT_ALIGNMENT);
+    
+    window.add(titlePanel, BorderLayout.NORTH);
     
   }
   
@@ -56,40 +85,55 @@ public class MainWindow extends JDialog
     JPanel list = new JPanel();
     list.setBackground(Color.BLUE);
     list.setOpaque(true);
-    list.setLayout(new BoxLayout(list, BoxLayout.Y_AXIS));
-    //list.setSize(150, 300);
-    JPanel favorPanel = new JPanel();
-    //Image star = ((ImageIcon)ImageStore.applet_loadedImages.get("yellowStar.png")).getImage();
+    list.setPreferredSize(new Dimension(100, 610));
+
     
-     //resizeImage(star,10,10);
-    ImageIcon star = new ImageIcon("smallStarYellow.png");
-    JPanel spacePan = new JPanel();
+    //Favorite Tab
+    JPanel favPanel = new JPanel();
+    favPanel.setBackground(Color.YELLOW);
+    favPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    favPanel.setPreferredSize(new Dimension(100, 30));
     
+    ImageIcon star = new ImageIcon("yellowStar.png");
     JLabel starLabel = new JLabel(star);
-    //starLabel.setPreferredSize(new Dimension(10, 10));
-   
-   
-    JLabel fav = new JLabel("Favorite", JLabel.CENTER);
-    fav.setFont(new Font("Arial", 1, 14));
-    fav.setHorizontalAlignment(4);
-
+    favPanel.add(starLabel);
     
-    favorPanel.setLayout(new GridBagLayout());
-    //favorPanel.setPreferredSize(new Dimension(150, 1));
-    favorPanel.setBackground(Color.YELLOW);
-    favorPanel.setOpaque(true);
-    favorPanel.add(starLabel);
-    favorPanel.add(fav);
+    JLabel fav = new JLabel("Favorite", JLabel.CENTER);
+    fav.setHorizontalAlignment(4);
+    favPanel.add(fav);
+    
 
-   
+    //Football Tab
+    JPanel footPanel = new JPanel();
+    footPanel.setBackground(Color.BLUE);
+    footPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    footPanel.setPreferredSize(new Dimension(100, 30));
+    
+    ImageIcon starFoot = new ImageIcon("clearStar.png");
+    JLabel starLabelFoot = new JLabel(starFoot);
+    footPanel.add(starLabelFoot);
+    
     JLabel football = new JLabel("Football", JLabel.CENTER);
     football.setHorizontalAlignment(4);
+    footPanel.add(football);
+    
+    //Hockey Tab
+    JPanel hockeyPanel = new JPanel();
+    hockeyPanel.setBackground(Color.BLUE);
+    hockeyPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    hockeyPanel.setPreferredSize(new Dimension(100,30));
+    
+    ImageIcon starHock = new ImageIcon("clearStar.png");
+    JLabel starLabelHock = new JLabel(starHock);
+    hockeyPanel.add(starLabelHock);
+    
     JLabel hockey = new JLabel("Hockey", JLabel.CENTER);
     hockey.setHorizontalAlignment(4);
+    hockeyPanel.add(hockey);
     
-    list.add(favorPanel);
-    list.add(football);
-    list.add(hockey);
+    list.add(favPanel);
+    list.add(footPanel);
+    list.add(hockeyPanel);
     
     window.add(list, BorderLayout.WEST);
     
