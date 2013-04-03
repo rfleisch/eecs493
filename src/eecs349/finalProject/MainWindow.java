@@ -83,10 +83,12 @@ public class MainWindow extends JDialog
   
   private void createListWest() {
     JPanel list = new JPanel();
+    list.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
     list.setBackground(Color.BLUE);
     list.setOpaque(true);
-    list.setPreferredSize(new Dimension(100, 610));
-
+    list.setPreferredSize(new Dimension(100, 90));
+    list.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+    
     
     //Favorite Tab
     JPanel favPanel = new JPanel();
@@ -131,9 +133,25 @@ public class MainWindow extends JDialog
     hockey.setHorizontalAlignment(4);
     hockeyPanel.add(hockey);
     
+    //Basketball Tab
+    JPanel basketPanel = new JPanel();
+    basketPanel.setBackground(Color.BLUE);
+    basketPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    basketPanel.setPreferredSize(new Dimension(100,30));
+    
+    ImageIcon starBask = new ImageIcon("clearStar.png");
+    JLabel starLabelBask = new JLabel(starBask);
+    basketPanel.add(starLabelBask);
+    
+    JLabel basket = new JLabel("Basketball", JLabel.CENTER);
+    basket.setHorizontalAlignment(4);
+    basketPanel.add(basket);
+    
+    
     list.add(favPanel);
     list.add(footPanel);
     list.add(hockeyPanel);
+    list.add(basketPanel);
     
     window.add(list, BorderLayout.WEST);
     
