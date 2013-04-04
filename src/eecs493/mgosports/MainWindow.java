@@ -81,37 +81,10 @@ public class MainWindow extends JDialog
     title.setPreferredSize(new Dimension( 520, 100));
     
     
-    JPanel twitterPanel = new JPanel();
-    twitterPanel.setPreferredSize(new Dimension(60, 100));
-    twitterPanel.setBackground(Color.BLUE);
-    
-    ImageIcon birdIcon = new ImageIcon("img/twitterBlueBird_48.png");
-    JLabel bird = new JLabel(birdIcon);
-    
-    JLabel login = new JLabel("Login");
-    login.setForeground(Color.WHITE);
-    login.setFont(new Font("Arial", Font.BOLD, 12));
-    
-    twitterPanel.add(bird);
-    twitterPanel.add(login);
-    
+    JPanel twitterPanel = TwitterAuthorization.GetPanel();
     titlePanel.add(twitterPanel, BorderLayout.EAST);    
     titlePanel.setAlignmentX(LEFT_ALIGNMENT);
-    
-    
-    titlePanel.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        JOptionPane.showMessageDialog(null, "Click OK to continue to a web browser to authorize Twitter", "Warning",
-            JOptionPane.OK_CANCEL_OPTION);
-
-       
-            twitter.authorize();
-      }
-  });
-    
-    window.add(titlePanel, BorderLayout.NORTH);
-    
+    window.add(titlePanel, BorderLayout.NORTH);  
   }
   
   private void createTabPanelWest() {

@@ -266,7 +266,14 @@ public class twitterUISetup extends JPanel
             return false;
         }
         
-        if (text.length() > 140)
+        String mGoSports = " #MGoSports";
+        String mgs = " #MGS";
+        
+        if (text.length() + mGoSports.length() <= 140)
+            text = text + mGoSports;
+        else if (text.length() + mgs.length() <= 140)
+            text = text + mgs;
+        else if (text.length() > 140)
         {
             showErrorMessage("Tweet exceeds maximum length of 140 characters.");
             return false;
