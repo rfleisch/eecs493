@@ -33,7 +33,8 @@ public class MainWindow extends JDialog
   private boolean favFoot;
   private String selectedTab;
   private twitterUISetup twitter;
-  private sportsView sv;
+  //private sportsView sv;
+  private hockeyview hv;
 
   
   
@@ -193,8 +194,8 @@ public class MainWindow extends JDialog
           basketPanel.setBackground(Color.BLUE);
           
           twitter = new twitterUISetup();
-          sv.removeAll();
-          window.remove(sv);
+          hv.removeAll();
+          window.remove(hv);
           window.add(twitter, BorderLayout.CENTER);
           
           favPanel.updateUI();
@@ -229,10 +230,10 @@ public class MainWindow extends JDialog
           hockeyPanel.setBackground(Color.YELLOW);
           basketPanel.setBackground(Color.BLUE);
           
-          sv = new sportsView("hockey"); 
+          hv = new hockeyview(); 
           twitter.removeAll();
           window.remove(twitter);
-          window.add(sv, BorderLayout.CENTER);
+          window.add(hv, BorderLayout.CENTER);
           
           favPanel.updateUI();
           footPanel.updateUI();

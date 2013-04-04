@@ -54,8 +54,8 @@ public class sportsView extends JPanel
     this.add(spacingW, BorderLayout.WEST);
     this.add(spacingE, BorderLayout.EAST);
     tabsSetup();
-    scheduleTabSetup();
-    rosterTabSetup();
+    //scheduleTabSetup();
+    //rosterTabSetup();
     tweetsTabSetup();
     
     
@@ -75,7 +75,6 @@ public class sportsView extends JPanel
     JTabbedPane tabbedPane = new JTabbedPane();
     tabbedPane.setPreferredSize(new Dimension(300, 400));
     tabbedPane.setBackground(Color.YELLOW);
-    //ImageIcon icon = createImageIcon("images/middle.gif");
 
     schedule = new JPanel();
     schedule.setPreferredSize(new Dimension(300, 400));
@@ -99,15 +98,8 @@ public class sportsView extends JPanel
     this.add(tabbedPane, BorderLayout.CENTER);
   }
   
-  public void scheduleTabSetup() {
+  public void scheduleTabSetup(String[] columns, Object[][] data) {
     
-    String[] columns = {"Date", "Opponent", "Location", "Time"};
-
-    Object[][] data = {
-        {"Tue., Oct. 9", "vs. Windsor ex", "Yost Ice Arena", "W 7-3"},
-        {"Thu., Oct 11", "vs Rochester Institute of Technology", "Yost Ice Arena", "L 5-4 (OT)" },
-        {"Fri., Oct. 12", "vs Rochester Institute of Technology",  "Yost Ice Arena", "W 7-2"}
-    };
 
     JTable table = new JTable(data, columns);
     
@@ -118,17 +110,8 @@ public class sportsView extends JPanel
     
   }
   
-  public void rosterTabSetup() {
+  public void rosterTabSetup(String[] columns, Object[][] data) {
     
-    
-    String[] columns = {"Number", "Name", "Pos", "DOB", "Hometown"};
-
-    Object[][] data = {
-        {"1", "Steve Racine", "G", "08/28/1991", "Williamsville, N.Y."},
-        {"2", "Mike Chiasson", "D", "03/28/1991", "Henderson, Nev." },
-        {"4", "Kevin Clare",  "D", "03/13/1992", "New Rochelle, N.Y."}
-    };
-
     final JTable tableRoster = new JTable(data, columns);
 
     
@@ -142,10 +125,17 @@ public class sportsView extends JPanel
       public void mouseClicked(MouseEvent e) {
           System.out.println("row clicked");
         
-        Object nameObject = tableRoster.getValueAt(tableRoster.getSelectedRow(), 1);
-        ImageIcon facePic = hockeyRoster.get(tableRoster.getSelectedRow()).getPicture();
+        ///Object nameObject = tableRoster.getValueAt(tableRoster.getSelectedRow(), 1);
+        ImageIcon facePic = null;
+        if(sport.compareTo("hockey") == 0 ) {
+           facePic = hockeyRoster.get(tableRoster.getSelectedRow()).getPicture();
+
+        } else if (sport.compareTo("football") == 0  ) {
+          
+        } else if (sport.compareTo("basketball") == 0 ) {
+          
+        }
         JLabel face = new JLabel(facePic);
-        
 
         
         /*
@@ -167,13 +157,7 @@ public class sportsView extends JPanel
         popup.setVisible(true);
         popup.setLocation(200, 200);
         popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
-        
-        
-        
-        
-        
-        
-        
+     
       }
   });
     
