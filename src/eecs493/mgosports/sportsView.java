@@ -63,38 +63,13 @@ public class sportsView extends JPanel
   }
   
   public void tweetSetup() {
-    JPanel tweetPanel = new JPanel();
-    tweetPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
-    tweetPanel.setBackground(Color.YELLOW);
-    tweetPanel.setOpaque(true);
-    tweetPanel.setPreferredSize(new Dimension(590, 50));
-    
-    twitterTextBox = new JTextField( 35);
-    setTweetText(sport);
-    ImageIcon bird = new ImageIcon("medBlueBird.png");
-    JLabel twitterLogo = new JLabel(bird);
-    
-    JButton btnTweet = new JButton("Tweet");
-    btnTweet.setPreferredSize(new Dimension(65,30));
-    
-    tweetPanel.add(twitterLogo);
-    tweetPanel.add(twitterTextBox);
-    tweetPanel.add(btnTweet);
+    tweetpanelwidget tweetPanel = new tweetpanelwidget(sport);
+
     
     this.add(tweetPanel, BorderLayout.NORTH);
   }
   
   
-  
-  public void setTweetText(String title_) {  
-    if(title_.compareTo("hockey") == 0) {
-      twitterTextBox.setText("Tweet about Michigan Hockey");
-    } else if (title_.compareTo("football") == 0) {
-      twitterTextBox.setText("Tweet about Michigan Football");
-    } else if (title_.compareTo("basketball") == 0) {
-      twitterTextBox.setText("Tweet about Michigan Basketball");
-    }		 
-  }
   
   public void tabsSetup() {
     JTabbedPane tabbedPane = new JTabbedPane();
