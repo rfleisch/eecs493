@@ -63,7 +63,7 @@ public class sportsView extends JPanel
   }
   
   public void tweetSetup() {
-    tweetpanelwidget tweetPanel = new tweetpanelwidget(sport);
+    TwitterTweeter tweetPanel = new TwitterTweeter(sport);
 
     
     this.add(tweetPanel, BorderLayout.NORTH);
