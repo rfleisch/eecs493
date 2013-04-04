@@ -32,6 +32,9 @@ public class MainWindow extends JDialog
   private boolean favHock;
   private boolean favFoot;
   private String selectedTab;
+  private twitterUISetup twitter;
+  private sportsView sv;
+
   
   
   
@@ -40,6 +43,7 @@ public class MainWindow extends JDialog
     favHock = false;
     favFoot = false;
     selectedTab = "favorite";
+
     
     window = new JFrame("MGoSports");
     window.setLayout(new BorderLayout());
@@ -176,6 +180,11 @@ public class MainWindow extends JDialog
           hockeyPanel.setBackground(Color.BLUE);
           basketPanel.setBackground(Color.BLUE);
           
+          twitter = new twitterUISetup();
+          sv.removeAll();
+          window.remove(sv);
+          window.add(twitter, BorderLayout.CENTER);
+          
           favPanel.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
@@ -202,16 +211,22 @@ public class MainWindow extends JDialog
     hockeyPanel.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-          System.out.println("favorite label");
+          System.out.println("hockey label");
           favPanel.setBackground(Color.BLUE);
           footPanel.setBackground(Color.BLUE);
           hockeyPanel.setBackground(Color.YELLOW);
           basketPanel.setBackground(Color.BLUE);
           
+          sv = new sportsView("hockey"); 
+          twitter.removeAll();
+          window.remove(twitter);
+          window.add(sv, BorderLayout.CENTER);
+          
           favPanel.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
           basketPanel.updateUI();
+          
       }
   });
     
@@ -304,8 +319,7 @@ public class MainWindow extends JDialog
   }
   
   public void createCenter() {
-    twitterUISetup twitter = new twitterUISetup();
-    
+   twitter = new twitterUISetup();
     window.add(twitter, BorderLayout.CENTER);
     
   }
