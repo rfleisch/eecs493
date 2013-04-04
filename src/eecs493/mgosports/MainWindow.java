@@ -97,6 +97,18 @@ public class MainWindow extends JDialog
     titlePanel.add(twitterPanel, BorderLayout.EAST);    
     titlePanel.setAlignmentX(LEFT_ALIGNMENT);
     
+    
+    titlePanel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        JOptionPane.showMessageDialog(null, "Click OK to continue to a web browser to authorize Twitter", "Warning",
+            JOptionPane.OK_CANCEL_OPTION);
+
+       
+            twitter.authorize();
+      }
+  });
+    
     window.add(titlePanel, BorderLayout.NORTH);
     
   }

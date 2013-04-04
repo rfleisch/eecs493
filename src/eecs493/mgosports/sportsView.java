@@ -182,7 +182,7 @@ public class sportsView extends JPanel
         add(frame);
         frame.pack();
         frame.setVisible(true);
-
+      */
         
         JDialog popup = new JDialog();
         JPanel facePan = new JPanel();
@@ -190,8 +190,9 @@ public class sportsView extends JPanel
         popup.add(facePan);
         popup.pack();
         popup.setVisible(true);
+        popup.setLocation(200, 200);
         popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
-        */
+        
         
         
         
