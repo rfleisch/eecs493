@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 public class hockeyview extends JPanel
 {
   private sportsView sv;
-  private String[] columnsSche = {"Date", "Opponent", "Location", "Time"};
+  private String[] columnsSche = {"Date", "Opponent", "Location", "Time/Result"};
 
   private Object[][] dataSche = {
       {"Tue., Oct. 9", "vs. Windsor ex", "Yost Ice Arena", "W 7-3"},

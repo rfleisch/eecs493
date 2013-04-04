@@ -35,6 +35,7 @@ public class MainWindow extends JDialog
   private twitterUISetup twitter;
   //private sportsView sv;
   private hockeyview hv;
+  private basketballview bv;
 
   
   
@@ -166,15 +167,25 @@ public class MainWindow extends JDialog
           hockeyPanel.setBackground(Color.BLUE);
           basketPanel.setBackground(Color.BLUE);
           
+          
+          if(selectedTab.compareTo("hockey") == 0) {
+            hv.removeAll();
+            window.remove(hv);
+          } else if ( selectedTab.compareTo("basketball") == 0 ) {
+            bv.removeAll();
+            window.remove(bv);
+          } else if ( selectedTab.compareTo("football") == 0 ) {
+            
+          }
+          
           twitter = new twitterUISetup();
-          hv.removeAll();
-          window.remove(hv);
           window.add(twitter, BorderLayout.CENTER);
           
           favPanel.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
           basketPanel.updateUI();
+          selectedTab = "favorite";
       }
   });
     
@@ -187,6 +198,19 @@ public class MainWindow extends JDialog
           hockeyPanel.setBackground(Color.BLUE);
           basketPanel.setBackground(Color.BLUE);
           
+          if(selectedTab.compareTo("hockey") == 0) {
+            hv.removeAll();
+            window.remove(hv);
+          } else if ( selectedTab.compareTo("basketball") == 0 ) {
+            bv.removeAll();
+            window.remove(bv);
+          } else if ( selectedTab.compareTo("favorite") == 0 ) {
+            
+          }
+          
+          
+          
+          selectedTab = "football";
           favPanel.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
@@ -203,11 +227,21 @@ public class MainWindow extends JDialog
           hockeyPanel.setBackground(Color.YELLOW);
           basketPanel.setBackground(Color.BLUE);
           
+          if(selectedTab.compareTo("favorite") == 0) {
+            twitter.removeAll();
+            window.remove(twitter);
+          } else if ( selectedTab.compareTo("basketball") == 0 ) {
+            bv.removeAll();
+            window.remove(bv);
+          } else if ( selectedTab.compareTo("football") == 0 ) {
+            
+          }
+          
+          
           hv = new hockeyview(); 
-          twitter.removeAll();
-          window.remove(twitter);
           window.add(hv, BorderLayout.CENTER);
           
+          selectedTab = "hockey";
           favPanel.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
@@ -225,6 +259,21 @@ public class MainWindow extends JDialog
           hockeyPanel.setBackground(Color.BLUE);
           basketPanel.setBackground(Color.YELLOW);
           
+          if(selectedTab.compareTo("hockey") == 0) {
+            hv.removeAll();
+            window.remove(hv);
+          } else if ( selectedTab.compareTo("favorite") == 0 ) {
+            twitter.removeAll();
+            window.remove(twitter);
+          } else if ( selectedTab.compareTo("football") == 0 ) {
+            
+          }
+          
+          
+          bv = new basketballview(); 
+          window.add(bv, BorderLayout.CENTER);
+          
+          selectedTab = "basketball";
           favPanel.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
