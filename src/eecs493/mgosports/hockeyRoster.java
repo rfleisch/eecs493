@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public class hockeyRoster
 {
-  private ArrayList<hockeyPlayer> roster;
+  private ArrayList<hockeyPlayerPic> roster = new ArrayList<hockeyPlayerPic>();
   
   public hockeyRoster() {
-    hockeyPlayer racine = new hockeyPlayer("Steve Racine", "1", "G", "08/28/1991");
-    hockeyPlayer chiasson = new hockeyPlayer("Mike Chiasson", "3", "R", "03/28/1991");
+    hockeyPlayerPic racine = new hockeyPlayerPic("steveRacine.jpeg");
+    hockeyPlayerPic chiasson = new hockeyPlayerPic( "chiasson.jpeg");
     
     roster.add(racine);
     roster.add(chiasson);
   }
 
-  public  ArrayList<hockeyPlayer> getRoster() {
+  public  ArrayList<hockeyPlayerPic> getRoster() {
     return roster;
   }
 
