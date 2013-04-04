@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -63,8 +64,8 @@ public class twitterUISetup extends JPanel
         //pack();
         setVisible(true);
 
-        //authorize();
-        //tweet("This is another test tweet sent from the #MGoSports app developed by @BrianRoskamp, @rfleischCity, @k_seks, and @mmmmpizzza for @umich.");
+        authorize();
+        //tweet("This is another test tweet sent from the #MGoSports app developed by @BrianRoskamp, @rfleischCity, @k_seks, and @mmmmpizzza for @umich. asfdjfdsajkadsfjkfdakjkjfdkjkjfdjadsfjafdsjkdsafjfdsjakjfdasjkfdsajkhfdasjkhfdsajkhdafskjhfdsajkh");
     };
     
     private static void loadProperties()
@@ -82,7 +83,7 @@ public class twitterUISetup extends JPanel
         catch (IOException ioe)
         {
             ioe.printStackTrace();
-            System.exit(-1);
+            showErrorMessage("An error occurred loading twitter properties: " + ioe.getMessage());
         }
         finally
         {
@@ -133,7 +134,8 @@ public class twitterUISetup extends JPanel
         catch (IOException ioe)
         {
             ioe.printStackTrace();
-            System.exit(-1);
+            showErrorMessage("An error occured getting the consumer keys: " + ioe.getMessage());
+            return false;
         }
         finally
         {
@@ -161,24 +163,18 @@ public class twitterUISetup extends JPanel
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             while (null == accessToken)
             {
-                System.out.println("Open the following URL and grant access to your account:");
-                System.out.println(requestToken.getAuthorizationURL());
+                
                 try
                 {
                     Desktop.getDesktop().browse(new URI(requestToken.getAuthorizationURL()));
                 }
-                catch (UnsupportedOperationException ignore)
+                catch (Exception e)
                 {
+                    System.out.println("An error occurred launching the browser." + 
+                            "Please ppen the following URL and grant access to your account:" +
+                            requestToken.getAuthorizationURL());
                 }
-                catch (IOException ignore)
-                {
-                }
-                catch (URISyntaxException e)
-                {
-                    throw new AssertionError(e);
-                }
-                System.out.print("Enter the PIN(if available) and hit enter after you granted access.[PIN]:");
-                String pin = br.readLine();
+                String pin = getInput("Grant access to your Twitter account and enter the PIN:");
                 try
                 {
                     if (pin.length() > 0)
@@ -194,12 +190,14 @@ public class twitterUISetup extends JPanel
                 {
                     if (401 == te.getStatusCode())
                     {
-                        System.out.println("Unable to get the access token.");
+                        showErrorMessage("Unable to get the access token.");
                     }
                     else
                     {
                         te.printStackTrace();
+                        showErrorMessage("An error occured getting twitter access tokens: " + te.getMessage());
                     }
+                    return false;
                 }
             }
             System.out.println("Got access token.");
@@ -232,21 +230,22 @@ public class twitterUISetup extends JPanel
                     }
                 }
             }
+            
             System.out.println("Successfully stored access token to " + file.getAbsolutePath() + ".");
+            return true;
         }
         catch (TwitterException te)
         {
             te.printStackTrace();
-            System.out.println("Failed to get accessToken: " + te.getMessage());
+            showErrorMessage("Failed to get accessToken: " + te.getMessage());
             return false;
         }
-        catch (IOException ioe)
+        /*catch (IOException ioe)
         {
             ioe.printStackTrace();
-            System.out.println("Failed to read the system input.");
+            showErrorMessage("Failed to read the system input.");
             return false;
-        }
-        return true;
+        }*/
     }
 
     // returns true if the tweet was successfully sent
@@ -260,7 +259,7 @@ public class twitterUISetup extends JPanel
         
         if (text.length() > 140)
         {
-            System.out.println("Tweet exceeds max. length of 140 characters.");
+            showErrorMessage("Tweet exceeds maximum length of 140 characters.");
             return false;
         }
         
@@ -276,8 +275,23 @@ public class twitterUISetup extends JPanel
         catch (TwitterException te)
         {
             te.printStackTrace();
-            System.out.println("Failed to get timeline: " + te.getMessage());
+            showErrorMessage("An error occurred sending the tweet: " + te.getMessage());
             return false;
         }
+    }
+    
+    private static void showErrorMessage(String text, String title)
+    {
+        JOptionPane.showMessageDialog(null, text, title, JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private static void showErrorMessage(String text)
+    {
+        JOptionPane.showMessageDialog(null, text, "Twitter error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private static String getInput(String prompt)
+    {
+        return JOptionPane.showInputDialog(prompt);
     }
 }

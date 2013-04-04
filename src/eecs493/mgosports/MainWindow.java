@@ -22,8 +22,8 @@ public class MainWindow extends JDialog
   private JLabel hockey;
   private JLabel football;
   private JLabel basketball;
-  private ImageIcon clearStar = new ImageIcon("clearStar.png");
-  private ImageIcon yellowStar = new ImageIcon("yellowStar.png");
+  private ImageIcon clearStar = new ImageIcon("img/clearStar.png");
+  private ImageIcon yellowStar = new ImageIcon("img/yellowStar.png");
   private JPanel favPanel;
   private JPanel footPanel;
   private JPanel hockeyPanel;
@@ -66,7 +66,7 @@ public class MainWindow extends JDialog
     titlePanel.setPreferredSize(new Dimension(700, 100));
     titlePanel.setBackground(Color.BLUE);
     
-    ImageIcon Mlogo = new ImageIcon("mgosportslogo.png");
+    ImageIcon Mlogo = new ImageIcon("img/mgosportslogo.png");
     
     Image img = Mlogo.getImage();
     Image newimg = img.getScaledInstance(500, 80,  java.awt.Image.SCALE_SMOOTH);  
@@ -84,7 +84,7 @@ public class MainWindow extends JDialog
     twitterPanel.setPreferredSize(new Dimension(60, 100));
     twitterPanel.setBackground(Color.BLUE);
     
-    ImageIcon birdIcon = new ImageIcon("twitterBlueBird.png");
+    ImageIcon birdIcon = new ImageIcon("img/twitterBlueBird_48.png");
     JLabel bird = new JLabel(birdIcon);
     
     JLabel login = new JLabel("Login");
@@ -116,7 +116,7 @@ public class MainWindow extends JDialog
     favPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
     favPanel.setPreferredSize(new Dimension(110, 30));
     
-    //ImageIcon star = new ImageIcon("yellowStar.png");
+    //ImageIcon star = new ImageIcon("img/yellowStar.png");
     //starLabelFav = new JLabel(yellowStar);
     //favPanel.add(starLabelFav);
     
@@ -132,7 +132,7 @@ public class MainWindow extends JDialog
     footPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     footPanel.setPreferredSize(new Dimension(110, 30));
     
-    //ImageIcon starFoot = new ImageIcon("clearStar.png");
+    //ImageIcon starFoot = new ImageIcon("img/clearStar.png");
     starLabelFoot = new JLabel(clearStar);
     footPanel.add(starLabelFoot);
     
@@ -147,7 +147,7 @@ public class MainWindow extends JDialog
     hockeyPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     hockeyPanel.setPreferredSize(new Dimension(110,30));
     
-    //ImageIcon starHock = new ImageIcon("clearStar.png");
+    //ImageIcon starHock = new ImageIcon("img/clearStar.png");
     starLabelHock = new JLabel(clearStar);
     hockeyPanel.add(starLabelHock);
     
@@ -162,7 +162,7 @@ public class MainWindow extends JDialog
     basketPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     basketPanel.setPreferredSize(new Dimension(110,30));
     
-    //ImageIcon starBask = new ImageIcon("clearStar.png");
+    //ImageIcon starBask = new ImageIcon("img/clearStar.png");
     starLabelBask = new JLabel(clearStar);
     basketPanel.add(starLabelBask);
     
