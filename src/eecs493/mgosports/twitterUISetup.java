@@ -17,6 +17,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -44,7 +46,7 @@ public class twitterUISetup extends JPanel
         textPanel.setOpaque(true);
         textPanel.setPreferredSize(new Dimension(400, 50));
         
-        JTextField text = new JTextField(40);
+        final JTextField text = new JTextField(40);
         //text.setPreferredSize(new Dimension(40, 10))''
         JLabel tweetLabel = new JLabel("Tweet");
         textPanel.add(tweetLabel);
@@ -57,15 +59,22 @@ public class twitterUISetup extends JPanel
         
         JButton btn = new JButton("Tweet");
         btn.setPreferredSize(new Dimension(70,20));
+        btn.addMouseListener(
+            new MouseAdapter()
+            {
+                @Override
+                public void mouseClicked(MouseEvent e)
+                {
+                    tweet(text.getText());
+                }
+            }
+        );
         btnPanel.add(btn);
 
         add(textPanel, BorderLayout.NORTH);
         add(btnPanel, BorderLayout.EAST);    
         //pack();
         setVisible(true);
-
-        authorize();
-        //tweet("This is another test tweet sent from the #MGoSports app developed by @BrianRoskamp, @rfleischCity, @k_seks, and @mmmmpizzza for @umich. asfdjfdsajkadsfjkfdakjkjfdkjkjfdjadsfjafdsjkdsafjfdsjakjfdasjkfdsajkhfdasjkhfdsajkhdafskjhfdsajkh");
     };
     
     private static void loadProperties()
