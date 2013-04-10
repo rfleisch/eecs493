@@ -36,6 +36,7 @@ public class MainWindow extends JDialog
   //private sportsView sv;
   private hockeyview hv;
   private basketballview bv;
+  private footballview fv;
 
   
   
@@ -175,7 +176,8 @@ public class MainWindow extends JDialog
             bv.removeAll();
             window.remove(bv);
           } else if ( selectedTab.compareTo("football") == 0 ) {
-            
+            fv.removeAll();
+            window.remove(fv);
           }
           
           twitter = new twitterUISetup();
@@ -205,9 +207,12 @@ public class MainWindow extends JDialog
             bv.removeAll();
             window.remove(bv);
           } else if ( selectedTab.compareTo("favorite") == 0 ) {
-            
+            twitter.removeAll();
+            window.remove(twitter);
           }
           
+          fv = new footballview(); 
+          window.add(fv, BorderLayout.CENTER);
           
           
           selectedTab = "football";
@@ -234,7 +239,8 @@ public class MainWindow extends JDialog
             bv.removeAll();
             window.remove(bv);
           } else if ( selectedTab.compareTo("football") == 0 ) {
-            
+            fv.removeAll();
+            window.remove(fv);
           }
           
           
@@ -266,7 +272,8 @@ public class MainWindow extends JDialog
             twitter.removeAll();
             window.remove(twitter);
           } else if ( selectedTab.compareTo("football") == 0 ) {
-            
+            fv.removeAll();
+            window.remove(fv);
           }
           
           
