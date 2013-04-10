@@ -73,23 +73,23 @@ public class sportsView extends JPanel
   
   public void tabsSetup() {
     JTabbedPane tabbedPane = new JTabbedPane();
-    tabbedPane.setPreferredSize(new Dimension(300, 400));
+    tabbedPane.setPreferredSize(new Dimension(300, 470));
     tabbedPane.setBackground(Color.YELLOW);
 
     schedule = new JPanel();
-    schedule.setPreferredSize(new Dimension(300, 400));
+    schedule.setPreferredSize(new Dimension(300, 470));
     schedule.setBackground(Color.YELLOW);
     tabbedPane.addTab("Schedule", schedule);
     tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
     roster = new JPanel();
-    roster.setPreferredSize(new Dimension(300, 400));
+    roster.setPreferredSize(new Dimension(300, 470));
     roster.setBackground(Color.YELLOW);
     tabbedPane.addTab("Roster", roster);
     tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
     
     tweets = new JPanel();
-    tweets.setPreferredSize(new Dimension(300, 400));
+    tweets.setPreferredSize(new Dimension(300, 470));
     tweets.setBackground(Color.YELLOW);
     tabbedPane.addTab("Tweets", tweets);
     tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
@@ -116,6 +116,7 @@ public class sportsView extends JPanel
 
     
     JScrollPane scrollPane = new JScrollPane(tableRoster);
+    //scrollPane.setPreferredSize(new Dimension (300, 2000));
     tableRoster.setFillsViewportHeight(true);
     
     roster.add(scrollPane, BorderLayout.CENTER);

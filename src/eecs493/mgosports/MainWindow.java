@@ -58,7 +58,7 @@ public class MainWindow extends JDialog
     //window.setBackground(new Color(0,0,139));
     
     window.pack();
-    window.setSize(700,500);
+    window.setSize(700,700);
     window.setVisible(true);
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
   }
