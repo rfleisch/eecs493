@@ -33,6 +33,8 @@ public class sportsView extends JPanel
   private JPanel roster;
   private JPanel tweets;
   private ArrayList<hockeyPlayerPic> hockeyRoster;
+  private ArrayList<footballPlayerPic> footballRoster;
+  private ArrayList<basketballPlayerPic> basketballRoster;
   private JLayeredPane layer = new JLayeredPane();
   
   public sportsView(String sport_) {
@@ -40,6 +42,9 @@ public class sportsView extends JPanel
     setLayout(new BorderLayout(0,0));
     setBackground(Color.YELLOW);
     hockeyRoster = new hockeyRoster().getRoster();
+    footballRoster = new footballRoster().getRoster();
+    basketballRoster = new basketballRoster().getRoster();
+    
 
     
     JPanel spacingW = new JPanel();
@@ -132,8 +137,10 @@ public class sportsView extends JPanel
            facePic = hockeyRoster.get(tableRoster.getSelectedRow()).getPicture();
 
         } else if (sport.compareTo("football") == 0  ) {
+          facePic = footballRoster.get(tableRoster.getSelectedRow()).getPicture();
           
         } else if (sport.compareTo("basketball") == 0 ) {
+          facePic = basketballRoster.get(tableRoster.getSelectedRow()).getPicture();
           
         }
         JLabel face = new JLabel(facePic);

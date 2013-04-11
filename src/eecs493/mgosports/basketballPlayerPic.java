@@ -2,19 +2,21 @@ package eecs493.mgosports;
 
 import javax.swing.ImageIcon;
 
-public class hockeyPlayerPic
+public class basketballPlayerPic
 {
   public ImageIcon pic;
   public String num;
   public String name;
   public String pos;
+  public String height;
   
-  public hockeyPlayerPic(String pic_, String num_, String name_, String pos_) {
+  public basketballPlayerPic(String pic_, String num_, String name_, String height_, String pos_) {
 
     pic = new ImageIcon(pic_);
     num = num_;
     name = name_;
     pos = pos_;
+    height = height_;
   }
   
   public ImageIcon getPicture() {
@@ -30,5 +32,4 @@ public class hockeyPlayerPic
   public String getPos() {
     return pos;
   }
-
 }
