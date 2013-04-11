@@ -2,7 +2,7 @@ package eecs493.mgosports;
 
 import javax.swing.ImageIcon;
 
-public class hockeyPlayerPic
+public class hockeyPlayerPic implements player
 {
   public ImageIcon pic;
   public String num;

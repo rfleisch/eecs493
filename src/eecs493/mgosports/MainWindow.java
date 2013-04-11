@@ -55,10 +55,8 @@ public class MainWindow extends JDialog
     createTabPanelWest();
     createCenter();
     
-    //window.setBackground(new Color(0,0,139));
-    
     window.pack();
-    window.setSize(700,700);
+    window.setSize(1000,700);
     window.setVisible(true);
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
   }
@@ -212,6 +210,7 @@ public class MainWindow extends JDialog
           }
           
           fv = new footballview(); 
+          //fv.setPreferredSize(new Dimension( 400, 470));
           window.add(fv, BorderLayout.CENTER);
           
           
@@ -245,6 +244,7 @@ public class MainWindow extends JDialog
           
           
           hv = new hockeyview(); 
+          //hv.setPreferredSize(new Dimension( 400, 470));
           window.add(hv, BorderLayout.CENTER);
           
           selectedTab = "hockey";
@@ -278,6 +278,7 @@ public class MainWindow extends JDialog
           
           
           bv = new basketballview(); 
+          //bv.setPreferredSize(new Dimension( 400, 470));
           window.add(bv, BorderLayout.CENTER);
           
           selectedTab = "basketball";

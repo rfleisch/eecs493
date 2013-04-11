@@ -5,11 +5,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class sportsView extends JPanel
 {
@@ -36,10 +40,16 @@ public class sportsView extends JPanel
   private ArrayList<footballPlayerPic> footballRoster;
   private ArrayList<basketballPlayerPic> basketballRoster;
   private JLayeredPane layer = new JLayeredPane();
+  private player person;
+  private JPanel playerProfile;
   
   public sportsView(String sport_) {
     sport = sport_;
-    setLayout(new BorderLayout(0,0));
+    playerProfile = new JPanel();
+    playerProfile.setPreferredSize(new Dimension(350,100));
+    playerProfile.setBackground(Color.YELLOW);
+    setLayout(new BorderLayout(10,0));
+    this.setPreferredSize(new Dimension(850, 470));
     setBackground(Color.YELLOW);
     hockeyRoster = new hockeyRoster().getRoster();
     footballRoster = new footballRoster().getRoster();
@@ -48,20 +58,20 @@ public class sportsView extends JPanel
 
     
     JPanel spacingW = new JPanel();
-    spacingW.setPreferredSize(new Dimension(50,400));
-    spacingW.setBackground(Color.YELLOW);
-    JPanel spacingE = new JPanel();
-    spacingE.setPreferredSize(new Dimension(50,400));
-    spacingE.setBackground(Color.YELLOW);
+    spacingW.setPreferredSize(new Dimension(10,400));
+    spacingW.setBackground(Color.ORANGE);
+
     
     
     tweetSetup();
-    this.add(spacingW, BorderLayout.WEST);
-    this.add(spacingE, BorderLayout.EAST);
+    //this.add(spacingW, BorderLayout.CENTER);
     tabsSetup();
+    this.add(playerProfile, BorderLayout.EAST);
+    //setupPlayerProfile();
     //scheduleTabSetup();
     //rosterTabSetup();
     tweetsTabSetup();
+    //this.add(spacingW, BorderLayout.CENTER);
     
     
     
@@ -69,8 +79,6 @@ public class sportsView extends JPanel
   
   public void tweetSetup() {
     TwitterTweeter tweetPanel = new TwitterTweeter(sport);
-
-    
     this.add(tweetPanel, BorderLayout.NORTH);
   }
   
@@ -78,11 +86,11 @@ public class sportsView extends JPanel
   
   public void tabsSetup() {
     JTabbedPane tabbedPane = new JTabbedPane();
-    tabbedPane.setPreferredSize(new Dimension(300, 470));
+    tabbedPane.setPreferredSize(new Dimension(450, 470));
     tabbedPane.setBackground(Color.YELLOW);
 
     schedule = new JPanel();
-    schedule.setPreferredSize(new Dimension(300, 470));
+    schedule.setPreferredSize(new Dimension(400, 470));
     schedule.setBackground(Color.YELLOW);
     tabbedPane.addTab("Schedule", schedule);
     tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
@@ -99,7 +107,21 @@ public class sportsView extends JPanel
     tabbedPane.addTab("Tweets", tweets);
     tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
     
+    tabbedPane.addChangeListener(new ChangeListener() {
 
+      @Override
+      public void stateChanged(ChangeEvent e)
+      {
+        System.out.println(" now clicked");
+        playerProfile.removeAll();
+        playerProfile.updateUI();
+        
+      }
+      
+    });
+    
+    
+    
     this.add(tabbedPane, BorderLayout.CENTER);
   }
   
@@ -107,11 +129,12 @@ public class sportsView extends JPanel
     
 
     JTable table = new JTable(data, columns);
+    table.setPreferredSize(new Dimension(300, 470));
     
     JScrollPane scrollPane = new JScrollPane(table);
     table.setFillsViewportHeight(true);
     
-    schedule.add(scrollPane, BorderLayout.CENTER);
+    schedule.add(scrollPane, BorderLayout.WEST);
     
   }
   
@@ -119,9 +142,8 @@ public class sportsView extends JPanel
     
     final JTable tableRoster = new JTable(data, columns);
 
-    
+  
     JScrollPane scrollPane = new JScrollPane(tableRoster);
-    //scrollPane.setPreferredSize(new Dimension (300, 2000));
     tableRoster.setFillsViewportHeight(true);
     
     roster.add(scrollPane, BorderLayout.CENTER);
@@ -135,29 +157,23 @@ public class sportsView extends JPanel
         ImageIcon facePic = null;
         if(sport.compareTo("hockey") == 0 ) {
            facePic = hockeyRoster.get(tableRoster.getSelectedRow()).getPicture();
+           person = hockeyRoster.get(tableRoster.getSelectedRow());
 
         } else if (sport.compareTo("football") == 0  ) {
           facePic = footballRoster.get(tableRoster.getSelectedRow()).getPicture();
+          person = footballRoster.get(tableRoster.getSelectedRow());
           
         } else if (sport.compareTo("basketball") == 0 ) {
           facePic = basketballRoster.get(tableRoster.getSelectedRow()).getPicture();
+          person = basketballRoster.get(tableRoster.getSelectedRow());
           
         }
         JLabel face = new JLabel(facePic);
-
+        setupPlayerProfile();
+        updateUI();
         
-        /*
-        JInternalFrame frame = new JInternalFrame(nameObject.toString(), true, true, true, true);
-        frame.setPreferredSize(new Dimension(100, 100));
-        frame.add(face);
-        frame.moveToFront();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        add(frame);
-        frame.pack();
-        frame.setVisible(true);
-      */
         
-        JDialog popup = new JDialog();
+        /*JDialog popup = new JDialog();
         JPanel facePan = new JPanel();
         facePan.add(face);
         popup.add(facePan);
@@ -165,10 +181,60 @@ public class sportsView extends JPanel
         popup.setVisible(true);
         popup.setLocation(200, 200);
         popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
+        */
      
       }
   });
     
+    
+  }
+  
+  public void setupPlayerProfile() {
+    playerProfile.removeAll();
+    this.remove(playerProfile);
+    playerProfile = new JPanel();
+    playerProfile.setLayout(new BorderLayout(10,10));
+    playerProfile.setPreferredSize(new Dimension(350,100));
+    playerProfile.setBackground(Color.YELLOW);
+    
+    JPanel spacingN = new JPanel();
+    JLabel profileLabel = new JLabel("Player Profile");
+    profileLabel.setFont(new Font("Times Roman", Font.BOLD, 18));
+    profileLabel.setAlignmentX(CENTER_ALIGNMENT);
+    spacingN.setPreferredSize(new Dimension(350,35));
+    spacingN.setBackground(Color.YELLOW);
+    spacingN.add(profileLabel);
+    
+    JPanel spacingS = new JPanel();
+    spacingS.setPreferredSize(new Dimension(350,220));
+    spacingS.setBackground(Color.YELLOW);
+    
+    JLabel name = new JLabel("Name: " + person.getName());
+    JLabel number = new JLabel("Number: " + person.getNum());
+    JLabel position = new JLabel("Position: " + person.getPos());
+    JPanel info = new JPanel();
+    info.setLayout(new BoxLayout(info, BoxLayout.PAGE_AXIS));
+    info.setBackground(Color.YELLOW);
+    info.add(name);
+    info.add(number);
+    info.add(position);
+    
+    info.setAlignmentX(LEFT_ALIGNMENT);
+    name.setFont(new Font("Times Roman", Font.BOLD, 14));
+    number.setFont(new Font("Times Roman", Font.BOLD, 14));
+    position.setFont(new Font("Times Roman", Font.BOLD, 14));
+
+    playerProfile.add(info, BorderLayout.CENTER);
+    playerProfile.add(spacingN, BorderLayout.NORTH);
+    
+
+    JLabel face = new JLabel(person.getPicture());
+    face.setAlignmentX(TOP_ALIGNMENT);
+    
+    playerProfile.add(face, BorderLayout.WEST);
+    playerProfile.add(spacingS, BorderLayout.SOUTH);
+    
+    this.add(playerProfile, BorderLayout.EAST);
     
   }
   
