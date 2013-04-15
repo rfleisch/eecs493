@@ -104,6 +104,9 @@ public class sportsView extends JPanel
     tweets = new JPanel();
     tweets.setPreferredSize(new Dimension(300, 470));
     tweets.setBackground(Color.YELLOW);
+    TwitterTimeline timeline = new TwitterTimeline();
+    tweets.add(timeline);
+    
     tabbedPane.addTab("Tweets", tweets);
     tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
     

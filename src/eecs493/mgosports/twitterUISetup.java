@@ -2,6 +2,8 @@ package eecs493.mgosports;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.User;
+import twitter4j.Paging;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -28,10 +30,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.util.List;
+
+
 public class twitterUISetup extends JPanel
 {
 	private final static String consumerKey = "S9qyKL0weuc9S65CME2dNA";
 	private final static String consumerSecret = "9QSTAcdzWYhN5dh7nknrIpPuSX7HU9RPcpoHH9pBhZE";
+	
+	private final static int pageSize = 10;    // the number of tweets per page, for the timeline.
 	
 	private static Properties prop = new Properties();
 
@@ -296,12 +303,45 @@ public class twitterUISetup extends JPanel
         }
     }
     
-    private static void showErrorMessage(String text, String title)
+    public static List<Status> getTimeline(String user, int pageNumber)
+    {
+        try
+        {
+            Twitter twitter = new TwitterFactory().getInstance();
+            List<Status> statuses = twitter.getUserTimeline(user, new Paging(pageNumber, pageSize));
+            System.out.println(statuses.size() + " statuses fetched for " + user);
+            
+            return statuses;
+        }
+        catch (TwitterException te)
+        {
+            te.printStackTrace();
+            showErrorMessage("Failed to get timeline: " + te.getMessage());
+            return null;
+        }
+    }
+    
+    public static User getUser(String user)
+    {
+        try
+        {
+            Twitter twitter = new TwitterFactory().getInstance();
+            return twitter.showUser(user);            
+        }
+        catch (TwitterException te)
+        {
+            te.printStackTrace();
+            showErrorMessage("Failed to get user: " + te.getMessage());
+            return null;
+        }
+    }
+    
+    public static void showErrorMessage(String text, String title)
     {
         JOptionPane.showMessageDialog(null, text, title, JOptionPane.ERROR_MESSAGE);
     }
     
-    private static void showErrorMessage(String text)
+    public static void showErrorMessage(String text)
     {
         JOptionPane.showMessageDialog(null, text, "Twitter error", JOptionPane.ERROR_MESSAGE);
     }
