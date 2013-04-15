@@ -37,6 +37,7 @@ public class MainWindow extends JDialog
   private hockeyview hv;
   private basketballview bv;
   private footballview fv;
+  private TwitterGraph graphView;
 
   
   
@@ -178,8 +179,12 @@ public class MainWindow extends JDialog
             window.remove(fv);
           }
           
-          twitter = new twitterUISetup();
-          window.add(twitter, BorderLayout.CENTER);
+          //twitter = new twitterUISetup();
+          //window.add(twitter, BorderLayout.CENTER);
+          graphView = new TwitterGraph(); 
+          graphView.getGraphByUser("davidnows");
+          //fv.setPreferredSize(new Dimension( 400, 470));
+          window.add(graphView, BorderLayout.CENTER);
           
           favPanel.updateUI();
           footPanel.updateUI();
@@ -205,8 +210,8 @@ public class MainWindow extends JDialog
             bv.removeAll();
             window.remove(bv);
           } else if ( selectedTab.compareTo("favorite") == 0 ) {
-            twitter.removeAll();
-            window.remove(twitter);
+            graphView.removeAll();
+            window.remove(graphView);
           }
           
           fv = new footballview(); 
@@ -232,8 +237,8 @@ public class MainWindow extends JDialog
           basketPanel.setBackground(Color.BLUE);
           
           if(selectedTab.compareTo("favorite") == 0) {
-            twitter.removeAll();
-            window.remove(twitter);
+            graphView.removeAll();
+            window.remove(graphView);
           } else if ( selectedTab.compareTo("basketball") == 0 ) {
             bv.removeAll();
             window.remove(bv);
@@ -269,8 +274,8 @@ public class MainWindow extends JDialog
             hv.removeAll();
             window.remove(hv);
           } else if ( selectedTab.compareTo("favorite") == 0 ) {
-            twitter.removeAll();
-            window.remove(twitter);
+            graphView.removeAll();
+            window.remove(graphView);
           } else if ( selectedTab.compareTo("football") == 0 ) {
             fv.removeAll();
             window.remove(fv);
@@ -362,8 +367,9 @@ public class MainWindow extends JDialog
   }
   
   public void createCenter() {
-   twitter = new twitterUISetup();
-    window.add(twitter, BorderLayout.CENTER);
+   graphView = new TwitterGraph();
+   graphView.getGraphByUser("davidnows");
+    window.add(graphView, BorderLayout.CENTER);
     
   }
  
