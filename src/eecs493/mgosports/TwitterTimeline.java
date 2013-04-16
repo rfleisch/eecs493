@@ -3,6 +3,9 @@ package eecs493.mgosports;
 import twitter4j.Status;
 import twitter4j.User;
 
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import java.awt.Color;
@@ -77,11 +80,44 @@ public class TwitterTimeline extends JPanel
         List<Status> statuses = twitterUISetup.getTimeline(username, pageNumber++);
         for (Status s : statuses)
         {
-            JLabel label = new JLabel(s.getText());
-            label.setVisible(true);
-            timeline.add(label);
+            String displayDate = GetDisplayDate(s.getCreatedAt());
+            
+            JPanel tweet = new JPanel();
+            JLabel text = new JLabel(s.getText());
+            JLabel time = new JLabel(displayDate);
+            
+            tweet.add(text);
+            tweet.add(time);
+            
+            timeline.add(tweet);
         }
         
+        // add the "load more" card
+    }
+    
+    private String GetDisplayDate(Date dateCreated)
+    {
+        Calendar created = Calendar.getInstance();
+        created.setTime(dateCreated);
         
+        Calendar now = Calendar.getInstance();
+        String displayDate;
+        
+        int difYear = now.get(Calendar.YEAR) - created.get(Calendar.YEAR);
+        int difMonth = now.get(Calendar.MONTH) - created.get(Calendar.MONTH);
+        int difDay = now.get(Calendar.DATE) - created.get(Calendar.DATE);
+        int difHour = now.get(Calendar.HOUR) - created.get(Calendar.HOUR);
+        int difMin = now.get(Calendar.MINUTE) - created.get(Calendar.MINUTE);
+        if (difYear > 0 || difMonth > 0 || difDay > 0)
+        {
+            displayDate = created.get(Calendar.DATE) + " " +
+                    (new DateFormatSymbols()).getMonths()[created.get(Calendar.MONTH)].substring(0, 3);
+        }
+        else if (difHour > 0)
+            displayDate = difHour + "h";
+        else
+            displayDate = difMin + "m";
+        
+        return displayDate;
     }
 }
