@@ -49,7 +49,7 @@ public class sportsView extends JPanel
     playerProfile.setPreferredSize(new Dimension(350,100));
     playerProfile.setBackground(Color.YELLOW);
     setLayout(new BorderLayout(10,0));
-    this.setPreferredSize(new Dimension(850, 470));
+    this.setPreferredSize(new Dimension(850, 550));
     setBackground(Color.YELLOW);
     hockeyRoster = new hockeyRoster().getRoster();
     footballRoster = new footballRoster().getRoster();
@@ -122,8 +122,6 @@ public class sportsView extends JPanel
       }
       
     });
-    
-    
     
     this.add(tabbedPane, BorderLayout.CENTER);
   }

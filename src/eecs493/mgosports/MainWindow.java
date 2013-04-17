@@ -57,7 +57,7 @@ public class MainWindow extends JDialog
     createCenter();
     
     window.pack();
-    window.setSize(1000,700);
+    window.setSize(1000,750);
     window.setVisible(true);
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
   }
