@@ -207,7 +207,7 @@ public class sportsView extends JPanel
     spacingN.add(profileLabel);
     
     JPanel spacingS = new JPanel();
-    spacingS.setPreferredSize(new Dimension(350,220));
+    spacingS.setPreferredSize(new Dimension(350,300));
     spacingS.setBackground(Color.YELLOW);
     
     JLabel name = new JLabel("Name: " + person.getName());
