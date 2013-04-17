@@ -336,6 +336,39 @@ public class twitterUISetup extends JPanel
         }
     }
     
+    public static boolean isFollowingUser(String user)
+    {
+        try
+        {
+            Twitter twitter = new TwitterFactory().getInstance();
+            return twitter.showFriendship(twitter.getId(),
+                    twitter.showUser(user).getId()).isSourceFollowingTarget();
+        }
+        catch (TwitterException te)
+        {
+            te.printStackTrace();
+            showErrorMessage("Error getting friendship status: " + te.getMessage());
+            return false;
+        }
+    }
+    
+    public static boolean followUser(String user)
+    {
+        try
+        {
+            Twitter twitter = new TwitterFactory().getInstance();
+            User following = twitter.createFriendship(user);
+            
+            return following.getStatusesCount() != 0;
+        }
+        catch (TwitterException te)
+        {
+            te.printStackTrace();
+            showErrorMessage("Failed to follow user: " + te.getMessage());
+            return false;
+        }
+    }
+    
     public static void showErrorMessage(String text, String title)
     {
         JOptionPane.showMessageDialog(null, text, title, JOptionPane.ERROR_MESSAGE);
