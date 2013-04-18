@@ -20,14 +20,14 @@ public class TwitterAuthorization
         panel.setPreferredSize(new Dimension(60, 100));
         panel.setBackground(Color.BLUE);
         
-        ImageIcon birdIcon = new ImageIcon(twitterUISetup.isAuthorized() ?
-                "img/twitterBlueBird_48.png" : "img/twitterGrayBird_48.png");
-        JLabel bird = new JLabel(birdIcon);
+        final boolean isAuthorized = twitterUISetup.isAuthorized();
+        final ImageIcon blueBird = new ImageIcon("img/twitterBlueBird_48.png");
+        final ImageIcon grayBird = new ImageIcon("img/twitterGrayBird_48.png");
+        final JLabel bird = new JLabel(isAuthorized ? blueBird : grayBird);
         
-        JLabel login = new JLabel("Login");
-        login.setForeground(Color.WHITE);
+        final JLabel login = new JLabel(isAuthorized ? "Logged in" : "Login");
+        login.setForeground(isAuthorized ? Color.GRAY : Color.WHITE);
         login.setFont(new Font("Arial", Font.BOLD, 12));
-        login.setVisible(!twitterUISetup.isAuthorized());
         
         panel.add(bird);
         panel.add(login);        
@@ -38,10 +38,21 @@ public class TwitterAuthorization
                 @Override
                 public void mouseClicked(MouseEvent e)
                 {
-                    JOptionPane.showMessageDialog(null, "Click OK to continue to a web browser to authorize Twitter", "Warning",
-                            JOptionPane.OK_CANCEL_OPTION);
-    
-                    twitterUISetup.authorize();
+                    if (!isAuthorized)
+                    {
+                        JOptionPane.showMessageDialog(null,
+                                "Click OK to continue to a web browser to authorize Twitter",
+                                "Warning",
+                                JOptionPane.OK_CANCEL_OPTION);
+                        
+                        boolean success = twitterUISetup.authorize();
+                        
+                        bird.setIcon(success ? blueBird : grayBird);
+                        
+                        login.setText(success ? "Logged in" : "Login");
+                        login.setForeground(success ? Color.GRAY : Color.WHITE);
+                        login.setFont(new Font("Arial", Font.BOLD, 12));
+                    }
                 }
             }
         );

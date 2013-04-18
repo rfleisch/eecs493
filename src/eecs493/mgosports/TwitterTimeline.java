@@ -50,17 +50,17 @@ public class TwitterTimeline extends JPanel
     
     private Font heading = new Font("Serif", Font.BOLD, 16);
     private Font detail = new Font("Serif", Font.PLAIN, 12);
-    private Font body = new Font("Serif", Font.PLAIN, 14);
+    private Font body = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
     
     private int pageNumber = 1;             // the current page displayed
     private String username;
     private int textWidth = 140;            // we know a tweet is at most 140 characters
     
     
-    public TwitterTimeline()
+    public TwitterTimeline(String u)
     {
         this.setPreferredSize(new Dimension(400, 375));
-        username = "umich";
+        username = u;
         System.out.println("twitter timeline created");
         
         // Initialize the header
@@ -181,7 +181,7 @@ public class TwitterTimeline extends JPanel
     
     private void GetNextTweets()
     {
-        AsyncTwitterFactory factory = new AsyncTwitterFactory();
+        AsyncTwitterFactory factory = new AsyncTwitterFactory(twitterUISetup.config);
         AsyncTwitter twitter = factory.getInstance();
         twitter.addListener(new TwitterAdapter() {
             @Override

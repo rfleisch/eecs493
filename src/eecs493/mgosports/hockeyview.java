@@ -85,7 +85,7 @@ public class hockeyview extends JPanel
   public hockeyview() {
     setLayout(new FlowLayout());
     setBackground(Color.YELLOW);
-    sv = new sportsView("hockey");
+    sv = new sportsView("hockey", "umichhockey");
     
     sv.scheduleTabSetup(columnsSche, dataSche);
     sv.rosterTabSetup(columnsRos, dataRos);

@@ -60,7 +60,7 @@ public class basketballview extends JPanel
   public basketballview() {
     setLayout(new FlowLayout());
     setBackground(Color.YELLOW);
-    sv = new sportsView("basketball");
+    sv = new sportsView("basketball", "umichbball");
     
     sv.scheduleTabSetup(columnsSche, dataSche);
     sv.rosterTabSetup(columnsRos, dataRos);

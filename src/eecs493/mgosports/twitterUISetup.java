@@ -2,6 +2,8 @@ package eecs493.mgosports;
 
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.*;
 
 import java.awt.*;
@@ -35,6 +37,7 @@ public class twitterUISetup extends JPanel
 	
 	public final static int pageSize = 10;    // the number of tweets per page, for the timeline.
 	
+	public static Configuration config = null;
 	private static Properties prop = new Properties();
     
     private static void loadProperties()
@@ -47,6 +50,19 @@ public class twitterUISetup extends JPanel
             {
                 is = new FileInputStream(propFile);
                 prop.load(is);
+                
+                String at = prop.getProperty("oauth.accessToken");
+                String ats = prop.getProperty("oauth.accessTokenSecret");
+                if (!(null ==  at|| null == ats))
+                {
+                    config = new ConfigurationBuilder()
+                        .setOAuthConsumerKey(consumerKey)
+                        .setOAuthConsumerSecret(consumerSecret)
+                        .setOAuthAccessToken(at)
+                        .setOAuthAccessTokenSecret(ats)
+                        .setDebugEnabled(true)
+                        .build();
+                }
             }
         }
         catch (IOException ioe)
@@ -72,9 +88,10 @@ public class twitterUISetup extends JPanel
     // returns true if authorized to use twitter
     public static boolean isAuthorized()
     {
-        loadProperties();
-        return !(null == prop.getProperty("oauth.accessToken") ||
-            null == prop.getProperty("oauth.accessTokenSecret"));
+        if (config == null)
+            loadProperties();
+        
+        return config != null;
     }
   
     // Adapted from Twitter4J examples
@@ -88,9 +105,6 @@ public class twitterUISetup extends JPanel
         OutputStream os = null;
         try
         {
-            String consumerKeyProp = prop.getProperty("oauth.consumerKey");
-            String consumerSecretProp = prop.getProperty("oauth.consumerSecret");
-            
             if (null == prop.getProperty("oauth.consumerKey") ||
                 null == prop.getProperty("oauth.consumerSecret"))
             {
@@ -114,9 +128,7 @@ public class twitterUISetup extends JPanel
                 {
                     os.close();
                 }
-                catch (IOException ignore)
-                {
-                }
+                catch (IOException ignore) { }
             }
         }
         
@@ -129,10 +141,8 @@ public class twitterUISetup extends JPanel
             System.out.println("Request token secret: " + requestToken.getTokenSecret());
             AccessToken accessToken = null;
   
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             while (null == accessToken)
             {
-                
                 try
                 {
                     Desktop.getDesktop().browse(new URI(requestToken.getAuthorizationURL()));
@@ -180,6 +190,17 @@ public class twitterUISetup extends JPanel
                 os = new FileOutputStream(file);
                 prop.store(os, "twitter4j.properties");
                 os.close();
+                
+                if (!(null ==  accessToken.getToken() || null == accessToken.getTokenSecret()))
+                {
+                    config = new ConfigurationBuilder()
+                        .setOAuthConsumerKey(consumerKey)
+                        .setOAuthConsumerSecret(consumerSecret)
+                        .setOAuthAccessToken(accessToken.getToken())
+                        .setOAuthAccessTokenSecret(accessToken.getTokenSecret())
+                        .setDebugEnabled(true)
+                        .build();
+                }
             }
             catch (IOException ioe)
             {
@@ -209,22 +230,19 @@ public class twitterUISetup extends JPanel
             showErrorMessage("Failed to get accessToken: " + te.getMessage());
             return false;
         }
-        /*catch (IOException ioe)
-        {
-            ioe.printStackTrace();
-            showErrorMessage("Failed to read the system input.");
-            return false;
-        }*/
     }
 
+    public static Twitter getTwitter()
+    {
+        new TwitterFactory(config);
+        return TwitterFactory.getSingleton();
+    }
+    
     // returns true if the tweet was successfully sent
     public static boolean tweet(String text)
     {
         if (!isAuthorized())
-        {
-            // Not authorized -> unable to send tweet
             return false;
-        }
         
         String mGoSports = " #MGoSports";
         String mgs = " #MGS";
@@ -241,8 +259,7 @@ public class twitterUISetup extends JPanel
         
         try
         {
-            Twitter twitter = new TwitterFactory().getInstance();
-            Status status = twitter.updateStatus(text);
+            Status status = getTwitter().updateStatus(text);
             
             System.out.println("Status updated to: '" + status.getText() + "'");
             
@@ -258,10 +275,12 @@ public class twitterUISetup extends JPanel
     
     public static User getUser(String user)
     {
+        if (!isAuthorized())
+            return null;
+        
         try
         {
-            Twitter twitter = new TwitterFactory().getInstance();
-            return twitter.showUser(user);            
+            return getTwitter().showUser(user);            
         }
         catch (TwitterException te)
         {
@@ -273,9 +292,12 @@ public class twitterUISetup extends JPanel
     
     public static boolean isFollowingUser(String user)
     {
+        if (!isAuthorized())
+            return false;
+        
         try
         {
-            Twitter twitter = new TwitterFactory().getInstance();
+            Twitter twitter = getTwitter();
             return twitter.showFriendship(twitter.getId(),
                     twitter.showUser(user).getId()).isSourceFollowingTarget();
         }
@@ -289,10 +311,12 @@ public class twitterUISetup extends JPanel
     
     public static boolean followUser(String user)
     {
+        if (!isAuthorized())
+            return false;
+        
         try
         {
-            Twitter twitter = new TwitterFactory().getInstance();
-            User following = twitter.createFriendship(user);
+            User following = getTwitter().createFriendship(user);
             
             return following.getStatusesCount() != 0;
         }

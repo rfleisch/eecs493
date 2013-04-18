@@ -42,8 +42,10 @@ public class sportsView extends JPanel
   private JLayeredPane layer = new JLayeredPane();
   private player person;
   private JPanel playerProfile;
+   
+  protected String twitterName;
   
-  public sportsView(String sport_) {
+  public sportsView(String sport_, String username) {
     sport = sport_;
     playerProfile = new JPanel();
     playerProfile.setPreferredSize(new Dimension(350,100));
@@ -55,7 +57,7 @@ public class sportsView extends JPanel
     footballRoster = new footballRoster().getRoster();
     basketballRoster = new basketballRoster().getRoster();
     
-
+    twitterName = username;
     
     JPanel spacingW = new JPanel();
     spacingW.setPreferredSize(new Dimension(10,400));
@@ -104,7 +106,7 @@ public class sportsView extends JPanel
     tweets = new JPanel();
     tweets.setPreferredSize(new Dimension(300, 470));
     tweets.setBackground(Color.YELLOW);
-    TwitterTimeline timeline = new TwitterTimeline();
+    TwitterTimeline timeline = new TwitterTimeline(twitterName);
     tweets.add(timeline);
     
     tabbedPane.addTab("Tweets", tweets);
