@@ -259,11 +259,11 @@ public class TwitterTimeline extends JPanel
         
         Calendar now = Calendar.getInstance();
         String displayDate;
-        
+
         int difYear = now.get(Calendar.YEAR) - created.get(Calendar.YEAR);
         int difMonth = now.get(Calendar.MONTH) - created.get(Calendar.MONTH);
         int difDay = now.get(Calendar.DATE) - created.get(Calendar.DATE);
-        int difHour = now.get(Calendar.HOUR) - created.get(Calendar.HOUR);
+        int difHour = now.get(Calendar.HOUR_OF_DAY) - created.get(Calendar.HOUR_OF_DAY);
         int difMin = now.get(Calendar.MINUTE) - created.get(Calendar.MINUTE);
         if (difYear > 0 || difMonth > 0 || difDay > 0)
         {

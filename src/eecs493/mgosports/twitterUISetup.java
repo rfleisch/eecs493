@@ -256,11 +256,6 @@ public class twitterUISetup extends JPanel
         }
     }
     
-    public static void getTimeline(AsyncTwitter twitter, String user, int pageNumber)
-    {
-        twitter.getUserTimeline(user, new Paging(pageNumber, pageSize));
-    }
-    
     public static User getUser(String user)
     {
         try
