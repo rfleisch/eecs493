@@ -187,6 +187,7 @@ public class MainWindow extends JDialog
           window.add(graphView, BorderLayout.CENTER);
           
           favPanel.updateUI();
+          graphView.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
           basketPanel.updateUI();
@@ -221,6 +222,7 @@ public class MainWindow extends JDialog
           
           selectedTab = "football";
           favPanel.updateUI();
+          graphView.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
           basketPanel.updateUI();
@@ -254,6 +256,7 @@ public class MainWindow extends JDialog
           
           selectedTab = "hockey";
           favPanel.updateUI();
+          graphView.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
           basketPanel.updateUI();
@@ -288,6 +291,7 @@ public class MainWindow extends JDialog
           
           selectedTab = "basketball";
           favPanel.updateUI();
+          graphView.updateUI();
           footPanel.updateUI();
           hockeyPanel.updateUI();
           basketPanel.updateUI();
