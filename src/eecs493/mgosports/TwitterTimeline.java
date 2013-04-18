@@ -1,6 +1,13 @@
 package eecs493.mgosports;
 
+import twitter4j.AsyncTwitter;
+import twitter4j.AsyncTwitterFactory;
+import twitter4j.Paging;
+import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.TwitterAdapter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterMethod;
 import twitter4j.User;
 
 import java.text.DateFormatSymbols;
@@ -48,7 +55,6 @@ public class TwitterTimeline extends JPanel
     private int pageNumber = 1;             // the current page displayed
     private String username;
     private int textWidth = 140;            // we know a tweet is at most 140 characters
-    
     
     
     public TwitterTimeline()
@@ -175,11 +181,36 @@ public class TwitterTimeline extends JPanel
     
     private void GetNextTweets()
     {
+        AsyncTwitterFactory factory = new AsyncTwitterFactory();
+        AsyncTwitter twitter = factory.getInstance();
+        twitter.addListener(new TwitterAdapter() {
+            @Override
+            public void gotUserTimeline(ResponseList<Status> statuses)
+            {
+                OnGotUserTimeline(statuses);
+            }
+            
+            @Override
+            public void onException(TwitterException e, TwitterMethod method)
+            {
+                System.out.println("Exception caught from twitter method '" +
+                        method.toString() + "'");
+                e.printStackTrace();
+                twitterUISetup.showErrorMessage("Failed to get timeline: " + e.getMessage());
+            }
+        });
+        
+        twitter.getUserTimeline(username, new Paging(pageNumber, twitterUISetup.pageSize));
+    }
+    
+    public void OnGotUserTimeline(ResponseList<Status> statuses)
+    {
+        System.out.println("got timeline. " + username);
+        
         // remove the "load more" component, when present
         if (pageNumber > 1)
             timeline.remove(timeline.getComponentCount());
         
-        List<Status> statuses = twitterUISetup.getTimeline(username, pageNumber++);
         for (Status s : statuses)
         {
             String displayDate = GetDisplayDate(s.getCreatedAt());

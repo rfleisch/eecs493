@@ -1,13 +1,8 @@
 package eecs493.mgosports;
 
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.User;
-import twitter4j.Paging;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
+import twitter4j.*;
 
 import java.awt.*;
 import java.io.*;
@@ -38,51 +33,9 @@ public class twitterUISetup extends JPanel
 	private final static String consumerKey = "S9qyKL0weuc9S65CME2dNA";
 	private final static String consumerSecret = "9QSTAcdzWYhN5dh7nknrIpPuSX7HU9RPcpoHH9pBhZE";
 	
-	private final static int pageSize = 10;    // the number of tweets per page, for the timeline.
+	public final static int pageSize = 10;    // the number of tweets per page, for the timeline.
 	
 	private static Properties prop = new Properties();
-
-    public twitterUISetup()
-    {
-        //set the layout of the main area
-        setLayout(new BorderLayout(10,10));
-        setBackground(Color.YELLOW);
-        
-        JPanel textPanel = new JPanel();
-        textPanel.setBackground(Color.YELLOW);
-        textPanel.setOpaque(true);
-        textPanel.setPreferredSize(new Dimension(400, 50));
-        
-        final JTextField text = new JTextField(40);
-        //text.setPreferredSize(new Dimension(40, 10))''
-        JLabel tweetLabel = new JLabel("Tweet");
-        textPanel.add(tweetLabel);
-        textPanel.add(text);
-        
-        JPanel btnPanel = new JPanel();
-        btnPanel.setBackground(Color.YELLOW);
-        btnPanel.setOpaque(true);
-        btnPanel.setPreferredSize(new Dimension(80, 80));
-        
-        JButton btn = new JButton("Tweet");
-        btn.setPreferredSize(new Dimension(70,20));
-        btn.addMouseListener(
-            new MouseAdapter()
-            {
-                @Override
-                public void mouseClicked(MouseEvent e)
-                {
-                    tweet(text.getText());
-                }
-            }
-        );
-        btnPanel.add(btn);
-
-        add(textPanel, BorderLayout.NORTH);
-        add(btnPanel, BorderLayout.EAST);    
-        //pack();
-        setVisible(true);
-    };
     
     private static void loadProperties()
     {
@@ -303,22 +256,9 @@ public class twitterUISetup extends JPanel
         }
     }
     
-    public static List<Status> getTimeline(String user, int pageNumber)
+    public static void getTimeline(AsyncTwitter twitter, String user, int pageNumber)
     {
-        try
-        {
-            Twitter twitter = new TwitterFactory().getInstance();
-            List<Status> statuses = twitter.getUserTimeline(user, new Paging(pageNumber, pageSize));
-            System.out.println(statuses.size() + " statuses fetched for " + user);
-            
-            return statuses;
-        }
-        catch (TwitterException te)
-        {
-            te.printStackTrace();
-            showErrorMessage("Failed to get timeline: " + te.getMessage());
-            return null;
-        }
+        twitter.getUserTimeline(user, new Paging(pageNumber, pageSize));
     }
     
     public static User getUser(String user)
