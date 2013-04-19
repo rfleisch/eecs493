@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -25,6 +26,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -36,6 +38,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -47,6 +50,7 @@ import javax.swing.event.ChangeListener;
 public class TwitterTimeline extends JPanel
 {
     private JPanel timeline;
+    private JPanel loadMore;
     
     private Font heading = new Font("Serif", Font.BOLD, 16);
     private Font detail = new Font("Serif", Font.PLAIN, 12);
@@ -59,7 +63,7 @@ public class TwitterTimeline extends JPanel
     
     public TwitterTimeline(String u)
     {
-        this.setPreferredSize(new Dimension(400, 375));
+        this.setPreferredSize(new Dimension(400, 460));
         username = u;
         System.out.println("twitter timeline created");
         
@@ -107,42 +111,39 @@ public class TwitterTimeline extends JPanel
         final JButton follow = new JButton(isFollowing ? "Following" : "Follow   ");
         follow.setEnabled(!isFollowing);
         follow.setIcon(new ImageIcon("img/twitterBlueBird_16.png"));
-        follow.addMouseListener(
-            new MouseListener()
+        follow.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e)
             {
-                @Override
-                public void mouseClicked(MouseEvent e)
-                {
-                    boolean isFollowing = twitterUISetup.followUser(username);
-                    follow.setText(isFollowing ? "Following" : "Follow   ");
-                    follow.setEnabled(!isFollowing);
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent arg0) {
-                    // TODO Auto-generated method stub
-                    
-                }
-
-                @Override
-                public void mouseExited(MouseEvent arg0) {
-                    // TODO Auto-generated method stub
-                    
-                }
-
-                @Override
-                public void mousePressed(MouseEvent arg0) {
-                    // TODO Auto-generated method stub
-                    
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent arg0) {
-                    // TODO Auto-generated method stub
-                    
-                }
+                boolean isFollowing = twitterUISetup.followUser(username);
+                follow.setText(isFollowing ? "Following" : "Follow   ");
+                follow.setEnabled(!isFollowing);
             }
-        );
+
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
         constraints.gridx = 2;
         constraints.gridy = 0;
         constraints.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -200,17 +201,51 @@ public class TwitterTimeline extends JPanel
             }
         });
         
-        twitter.getUserTimeline(username, new Paging(pageNumber, twitterUISetup.pageSize));
+        twitter.getUserTimeline(username, new Paging(pageNumber++, twitterUISetup.pageSize));
     }
     
     public void OnGotUserTimeline(ResponseList<Status> statuses)
     {
-        System.out.println("got timeline. " + username);
+        System.out.println("got timeline. " + username + " size: " + statuses.size());
         
-        // remove the "load more" component, when present
-        if (pageNumber > 1)
-            timeline.remove(timeline.getComponentCount());
+        if (loadMore == null)
+        {
+            loadMore = new JPanel();
+            loadMore.setSize(timeline.getWidth(), 20);
+            final JLabel loadText = new JLabel("Load more");
+            loadText.setFont(body);
+            loadMore.add(loadText);
+            
+            loadMore.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e)
+                {
+                    e.getComponent().getParent().setCursor(
+                            Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    timeline.remove(loadMore);
+                    timeline.updateUI();
+                    GetNextTweets();
+                }
+                
+                @Override
+                public void mouseEntered(MouseEvent e)
+                {
+                    loadText.setForeground(Color.GRAY);
+                }
+                
+                @Override
+                public void mouseExited(MouseEvent e)
+                {
+                    loadText.setForeground(Color.BLACK);
+                }
+            });
+        }
+        else
+        {
+            timeline.setCursor(Cursor.getDefaultCursor());
+        }
         
+        System.out.println(statuses.size());
         for (Status s : statuses)
         {
             String displayDate = GetDisplayDate(s.getCreatedAt());
@@ -249,7 +284,8 @@ public class TwitterTimeline extends JPanel
             timeline.add(tweet);
         }
         
-        // add the "load more" card
+        timeline.add(loadMore);
+        timeline.updateUI();
     }
     
     private String GetDisplayDate(Date dateCreated)
