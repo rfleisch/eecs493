@@ -122,9 +122,11 @@ public class footballview extends JPanel
       
   };
   
-  public footballview() {    
+  public footballview() {
+    Color blue = new Color(0,0,128);
+    Color yellow = new Color(255,215,0);
     setLayout(new FlowLayout());
-    setBackground(Color.YELLOW);
+    setBackground(yellow);
     sv = new sportsView("football", "umichfootball");
     
     sv.scheduleTabSetup(columnsSche, dataSche);

@@ -114,6 +114,7 @@ public class MainWindow extends JDialog
     fav = new JLabel("Favorite", JLabel.CENTER);
     fav.setFont(new Font("Arial", Font.BOLD, 14));
     fav.setHorizontalAlignment(4);
+    fav.setForeground(Color.black);
     favPanel.add(fav);
     
 
@@ -130,6 +131,7 @@ public class MainWindow extends JDialog
     football = new JLabel("Football", JLabel.CENTER);
     football.setFont(new Font("Arial", Font.BOLD, 14));
     football.setHorizontalAlignment(4);
+    football.setForeground(Color.white);
     footPanel.add(football);
     
     //Hockey Tab
@@ -145,6 +147,7 @@ public class MainWindow extends JDialog
     hockey = new JLabel("Hockey", JLabel.CENTER);
     hockey.setFont(new Font("Arial", Font.BOLD, 14));
     hockey.setHorizontalAlignment(4);
+    hockey.setForeground(Color.white);
     hockeyPanel.add(hockey);
     
     //Basketball Tab
@@ -160,6 +163,7 @@ public class MainWindow extends JDialog
     basketball = new JLabel("Basketball", JLabel.CENTER);
     basketball.setFont(new Font("Arial", Font.BOLD, 14));
     basketball.setHorizontalAlignment(4);
+    basketball.setForeground(Color.white);
     basketPanel.add(basketball);
     
     favPanel.addMouseListener(new MouseAdapter() {
@@ -170,6 +174,11 @@ public class MainWindow extends JDialog
           footPanel.setBackground(blue);
           hockeyPanel.setBackground(blue);
           basketPanel.setBackground(blue);
+          
+          fav.setForeground(Color.black);
+          football.setForeground(Color.white);
+          hockey.setForeground(Color.white);
+          basketball.setForeground(Color.white);
           
           
           if(selectedTab.compareTo("hockey") == 0) {
@@ -208,6 +217,11 @@ public class MainWindow extends JDialog
           hockeyPanel.setBackground(blue);
           basketPanel.setBackground(blue);
           
+          fav.setForeground(Color.white);
+          football.setForeground(Color.black);
+          hockey.setForeground(Color.white);
+          basketball.setForeground(Color.white);
+          
           if(selectedTab.compareTo("hockey") == 0) {
             hv.removeAll();
             window.remove(hv);
@@ -241,6 +255,11 @@ public class MainWindow extends JDialog
           footPanel.setBackground(blue);
           hockeyPanel.setBackground(yellow);
           basketPanel.setBackground(blue);
+          
+          fav.setForeground(Color.white);
+          football.setForeground(Color.white);
+          hockey.setForeground(Color.black);
+          basketball.setForeground(Color.white);
           
           if(selectedTab.compareTo("favorite") == 0) {
             graphView.removeAll();
@@ -276,6 +295,11 @@ public class MainWindow extends JDialog
           footPanel.setBackground(blue);
           hockeyPanel.setBackground(blue);
           basketPanel.setBackground(yellow);
+          
+          fav.setForeground(Color.white);
+          football.setForeground(Color.white);
+          hockey.setForeground(Color.white);
+          basketball.setForeground(Color.black);
           
           if(selectedTab.compareTo("hockey") == 0) {
             hv.removeAll();

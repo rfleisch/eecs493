@@ -83,8 +83,10 @@ public class hockeyview extends JPanel
   };
   
   public hockeyview() {
+    Color blue = new Color(0,0,128);
+    Color yellow = new Color(255,215,0);
     setLayout(new FlowLayout());
-    setBackground(Color.YELLOW);
+    setBackground(yellow);
     sv = new sportsView("hockey", "umichhockey");
     
     sv.scheduleTabSetup(columnsSche, dataSche);
