@@ -49,6 +49,15 @@ public class MainWindow extends JDialog
     favHock = false;
     favFoot = false;
     selectedTab = "favorite";
+    
+    try
+    {
+    	UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+    }
+    catch (Exception e)
+    {
+    	e.printStackTrace();
+    }
 
     
     window = new JFrame("MGoSports");
