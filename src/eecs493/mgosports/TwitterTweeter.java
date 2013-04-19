@@ -14,11 +14,13 @@ public class TwitterTweeter extends JPanel
 {
   
   private JTextField twitterTextBox;
+  private Color blue = new Color(0,0,128);
+  private Color yellow = new Color(255,215,0);
   
   public TwitterTweeter(String sport) {
     //JPanel tweetPanel = new JPanel();
     setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
-    setBackground(Color.YELLOW);
+    setBackground(yellow);
     setOpaque(true);
     setPreferredSize(new Dimension(590, 50));
     

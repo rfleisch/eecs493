@@ -42,6 +42,8 @@ public class sportsView extends JPanel
   private JLayeredPane layer = new JLayeredPane();
   private player person;
   private JPanel playerProfile;
+  private Color blue = new Color(0,0,128);
+  private Color yellow = new Color(255,215,0);
    
   protected String twitterName;
   
@@ -49,10 +51,10 @@ public class sportsView extends JPanel
     sport = sport_;
     playerProfile = new JPanel();
     playerProfile.setPreferredSize(new Dimension(350,100));
-    playerProfile.setBackground(Color.YELLOW);
+    playerProfile.setBackground(yellow);
     setLayout(new BorderLayout(10,0));
     this.setPreferredSize(new Dimension(850, 550));
-    setBackground(Color.YELLOW);
+    setBackground(yellow);
     hockeyRoster = new hockeyRoster().getRoster();
     footballRoster = new footballRoster().getRoster();
     basketballRoster = new basketballRoster().getRoster();
@@ -89,23 +91,23 @@ public class sportsView extends JPanel
   public void tabsSetup() {
     JTabbedPane tabbedPane = new JTabbedPane();
     tabbedPane.setPreferredSize(new Dimension(450, 470));
-    tabbedPane.setBackground(Color.YELLOW);
+    tabbedPane.setBackground(yellow);
 
     schedule = new JPanel();
     schedule.setPreferredSize(new Dimension(400, 470));
-    schedule.setBackground(Color.YELLOW);
+    schedule.setBackground(yellow);
     tabbedPane.addTab("Schedule", schedule);
     tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
     roster = new JPanel();
     roster.setPreferredSize(new Dimension(300, 470));
-    roster.setBackground(Color.YELLOW);
+    roster.setBackground(yellow);
     tabbedPane.addTab("Roster", roster);
     tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
     
     tweets = new JPanel();
     tweets.setPreferredSize(new Dimension(300, 470));
-    tweets.setBackground(Color.YELLOW);
+    tweets.setBackground(yellow);
     TwitterTimeline timeline = new TwitterTimeline(twitterName, true);
     tweets.add(timeline);
     
@@ -198,19 +200,19 @@ public class sportsView extends JPanel
     playerProfile = new JPanel();
     playerProfile.setLayout(new BorderLayout(10,10));
     playerProfile.setPreferredSize(new Dimension(350,100));
-    playerProfile.setBackground(Color.YELLOW);
+    playerProfile.setBackground(yellow);
     
     JPanel spacingN = new JPanel();
     JLabel profileLabel = new JLabel("Player Profile");
     profileLabel.setFont(new Font("Times Roman", Font.BOLD, 18));
     profileLabel.setAlignmentX(CENTER_ALIGNMENT);
     spacingN.setPreferredSize(new Dimension(350,35));
-    spacingN.setBackground(Color.YELLOW);
+    spacingN.setBackground(yellow);
     spacingN.add(profileLabel);
     
     JPanel spacingS = new JPanel();
     spacingS.setPreferredSize(new Dimension(350,300));
-    spacingS.setBackground(Color.YELLOW);
+    spacingS.setBackground(yellow);
     spacingS.add(new TwitterTimeline(person.getHandle(), false));
     
     JLabel name = new JLabel("Name: " + person.getName());
@@ -218,7 +220,7 @@ public class sportsView extends JPanel
     JLabel position = new JLabel("Position: " + person.getPos());
     JPanel info = new JPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.PAGE_AXIS));
-    info.setBackground(Color.YELLOW);
+    info.setBackground(yellow);
     info.add(name);
     info.add(number);
     info.add(position);

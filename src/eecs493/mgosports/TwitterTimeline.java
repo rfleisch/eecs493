@@ -61,6 +61,9 @@ public class TwitterTimeline extends JPanel
     public static int pageSize;             // the number of tweets per page
     private int textWidth = 140;            // we know a tweet is at most 140 characters
     
+    private Color blue = new Color(0,0,128);
+    private Color yellow = new Color(255,215,0);
+    
     
     public TwitterTimeline(String u, boolean isFullSize)
     {

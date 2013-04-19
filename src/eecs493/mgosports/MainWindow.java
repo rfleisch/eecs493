@@ -38,6 +38,8 @@ public class MainWindow extends JDialog
   private basketballview bv;
   private footballview fv;
   private TwitterGraph graphView;
+  private Color blue = new Color(0,0,128);
+  private Color yellow = new Color(255,215,0);
 
   
   
@@ -51,6 +53,7 @@ public class MainWindow extends JDialog
     
     window = new JFrame("MGoSports");
     window.setLayout(new BorderLayout());
+    
     
     createTitleNorth();
     createTabPanelWest();
@@ -66,7 +69,8 @@ public class MainWindow extends JDialog
     JPanel titlePanel = new JPanel();
     titlePanel.setLayout(new BorderLayout(10,10));
     titlePanel.setPreferredSize(new Dimension(700, 100));
-    titlePanel.setBackground(Color.BLUE);
+    
+    titlePanel.setBackground(blue);
     
     ImageIcon Mlogo = new ImageIcon("img/mgosportslogo.png");
     
@@ -76,7 +80,7 @@ public class MainWindow extends JDialog
     
      
     JLabel title = new JLabel(newIcon);
-    title.setBackground(Color.BLUE);
+    title.setBackground(blue);
     title.setOpaque(true);
     titlePanel.add(title, BorderLayout.WEST);
     title.setPreferredSize(new Dimension( 520, 100));
@@ -91,7 +95,7 @@ public class MainWindow extends JDialog
   private void createTabPanelWest() {
     JPanel list = new JPanel();
     list.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-    list.setBackground(Color.BLUE);
+    list.setBackground(blue);
     list.setOpaque(true);
     list.setPreferredSize(new Dimension(110, 90));
     list.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
@@ -99,7 +103,7 @@ public class MainWindow extends JDialog
     
     //Favorite Tab
     favPanel = new JPanel();
-    favPanel.setBackground(Color.YELLOW);
+    favPanel.setBackground(yellow);
     favPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
     favPanel.setPreferredSize(new Dimension(110, 30));
     
@@ -115,7 +119,7 @@ public class MainWindow extends JDialog
 
     //Football Tab
     footPanel = new JPanel();
-    footPanel.setBackground(Color.BLUE);
+    footPanel.setBackground(blue);
     footPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     footPanel.setPreferredSize(new Dimension(110, 30));
     
@@ -130,7 +134,7 @@ public class MainWindow extends JDialog
     
     //Hockey Tab
     hockeyPanel = new JPanel();
-    hockeyPanel.setBackground(Color.BLUE);
+    hockeyPanel.setBackground(blue);
     hockeyPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     hockeyPanel.setPreferredSize(new Dimension(110,30));
     
@@ -145,7 +149,7 @@ public class MainWindow extends JDialog
     
     //Basketball Tab
     basketPanel = new JPanel();
-    basketPanel.setBackground(Color.BLUE);
+    basketPanel.setBackground(blue);
     basketPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     basketPanel.setPreferredSize(new Dimension(110,30));
     
@@ -162,10 +166,10 @@ public class MainWindow extends JDialog
       @Override
       public void mouseClicked(MouseEvent e) {
           System.out.println("favorite label");
-          favPanel.setBackground(Color.YELLOW);
-          footPanel.setBackground(Color.BLUE);
-          hockeyPanel.setBackground(Color.BLUE);
-          basketPanel.setBackground(Color.BLUE);
+          favPanel.setBackground(yellow);
+          footPanel.setBackground(blue);
+          hockeyPanel.setBackground(blue);
+          basketPanel.setBackground(blue);
           
           
           if(selectedTab.compareTo("hockey") == 0) {
@@ -199,10 +203,10 @@ public class MainWindow extends JDialog
       @Override
       public void mouseClicked(MouseEvent e) {
           System.out.println("favorite label");
-          favPanel.setBackground(Color.BLUE);
-          footPanel.setBackground(Color.YELLOW);
-          hockeyPanel.setBackground(Color.BLUE);
-          basketPanel.setBackground(Color.BLUE);
+          favPanel.setBackground(blue);
+          footPanel.setBackground(yellow);
+          hockeyPanel.setBackground(blue);
+          basketPanel.setBackground(blue);
           
           if(selectedTab.compareTo("hockey") == 0) {
             hv.removeAll();
@@ -233,10 +237,10 @@ public class MainWindow extends JDialog
       @Override
       public void mouseClicked(MouseEvent e) {
           System.out.println("hockey label");
-          favPanel.setBackground(Color.BLUE);
-          footPanel.setBackground(Color.BLUE);
-          hockeyPanel.setBackground(Color.YELLOW);
-          basketPanel.setBackground(Color.BLUE);
+          favPanel.setBackground(blue);
+          footPanel.setBackground(blue);
+          hockeyPanel.setBackground(yellow);
+          basketPanel.setBackground(blue);
           
           if(selectedTab.compareTo("favorite") == 0) {
             graphView.removeAll();
@@ -268,10 +272,10 @@ public class MainWindow extends JDialog
       @Override
       public void mouseClicked(MouseEvent e) {
           System.out.println("favorite label");
-          favPanel.setBackground(Color.BLUE);
-          footPanel.setBackground(Color.BLUE);
-          hockeyPanel.setBackground(Color.BLUE);
-          basketPanel.setBackground(Color.YELLOW);
+          favPanel.setBackground(blue);
+          footPanel.setBackground(blue);
+          hockeyPanel.setBackground(blue);
+          basketPanel.setBackground(yellow);
           
           if(selectedTab.compareTo("hockey") == 0) {
             hv.removeAll();

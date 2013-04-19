@@ -55,7 +55,8 @@ public class TwitterGraph extends JPanel
   
   private void buildUI()
   {
-    setBackground(Color.YELLOW);
+    Color yellow = new Color(255,215,0);
+    setBackground(yellow);
     updateGraph();
   }
   

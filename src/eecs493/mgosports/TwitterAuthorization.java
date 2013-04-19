@@ -1,6 +1,7 @@
 package eecs493.mgosports;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,13 +13,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+
 public class TwitterAuthorization
 {
+
     public static JPanel GetPanel()
     {
+    Color blue = new Color(0,0,128);
+    Color yellow = new Color(255,215,0);
+    
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(60, 100));
-        panel.setBackground(Color.BLUE);
+        panel.setBackground(blue);
         
         final boolean isAuthorized = twitterUISetup.isAuthorized();
         final ImageIcon blueBird = new ImageIcon("img/twitterBlueBird_48.png");
