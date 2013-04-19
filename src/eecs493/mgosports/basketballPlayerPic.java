@@ -9,6 +9,7 @@ public class basketballPlayerPic implements player
   public String name;
   public String pos;
   public String height;
+  public String handle;
   
   public basketballPlayerPic(String pic_, String num_, String name_, String height_, String pos_) {
 
@@ -17,7 +18,18 @@ public class basketballPlayerPic implements player
     name = name_;
     pos = pos_;
     height = height_;
+    handle = "";
   }
+  
+  public basketballPlayerPic(String pic_, String num_, String name_, String height_, String pos_, String handle_) {
+
+      pic = new ImageIcon(pic_);
+      num = num_;
+      name = name_;
+      pos = pos_;
+      height = height_;
+      handle = handle_;
+    }
   
   public ImageIcon getPicture() {
     return pic;
@@ -31,5 +43,10 @@ public class basketballPlayerPic implements player
   }
   public String getPos() {
     return pos;
+  }
+  
+  public String getHandle()
+  {
+      return handle;
   }
 }

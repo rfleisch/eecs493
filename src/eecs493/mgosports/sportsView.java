@@ -106,7 +106,7 @@ public class sportsView extends JPanel
     tweets = new JPanel();
     tweets.setPreferredSize(new Dimension(300, 470));
     tweets.setBackground(Color.YELLOW);
-    TwitterTimeline timeline = new TwitterTimeline(twitterName);
+    TwitterTimeline timeline = new TwitterTimeline(twitterName, true);
     tweets.add(timeline);
     
     tabbedPane.addTab("Tweets", tweets);
@@ -211,6 +211,7 @@ public class sportsView extends JPanel
     JPanel spacingS = new JPanel();
     spacingS.setPreferredSize(new Dimension(350,300));
     spacingS.setBackground(Color.YELLOW);
+    spacingS.add(new TwitterTimeline(person.getHandle(), false));
     
     JLabel name = new JLabel("Name: " + person.getName());
     JLabel number = new JLabel("Number: " + person.getNum());

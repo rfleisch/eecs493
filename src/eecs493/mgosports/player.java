@@ -8,5 +8,6 @@ public interface player
   public String getNum();
   public String getName();
   public String getPos();
+  public String getHandle();
 
 }

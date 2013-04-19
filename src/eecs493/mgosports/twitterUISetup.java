@@ -34,9 +34,7 @@ public class twitterUISetup extends JPanel
 {
 	private final static String consumerKey = "S9qyKL0weuc9S65CME2dNA";
 	private final static String consumerSecret = "9QSTAcdzWYhN5dh7nknrIpPuSX7HU9RPcpoHH9pBhZE";
-	
-	public final static int pageSize = 10;    // the number of tweets per page, for the timeline.
-	
+		
 	public static Configuration config = null;
 	private static Properties prop = new Properties();
     
@@ -284,6 +282,11 @@ public class twitterUISetup extends JPanel
         }
         catch (TwitterException te)
         {
+            if (34 == te.getErrorCode())
+            {
+                System.out.println("User not found");
+                return null;
+            }
             te.printStackTrace();
             showErrorMessage("Failed to get user: " + te.getMessage());
             return null;

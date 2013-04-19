@@ -32,7 +32,7 @@ public class footballRoster
     roster.add(jer);
     footballPlayerPic allen = new footballPlayerPic ("img/allen.jpeg", "12", "Allen Gant", "DB"); 
     roster.add(allen);
-    footballPlayerPic devin = new footballPlayerPic ("img/devin.jpeg", "12", "Devin Gardner", "QB"); 
+    footballPlayerPic devin = new footballPlayerPic ("img/devin.jpeg", "12", "Devin Gardner", "QB", "dg1two"); 
     roster.add(devin);
     footballPlayerPic alex = new footballPlayerPic ("img/alex.jpeg", "13", "Alex Swieca", "QB"); 
     roster.add(alex);
@@ -156,7 +156,7 @@ public class footballRoster
     roster.add(michaelS);
     footballPlayerPic quin = new footballPlayerPic ("img/quinton.jpeg", "76", "Quinton Washington", "DT"); 
     roster.add(quin);
-    footballPlayerPic taylor = new footballPlayerPic ("img/taylor.jpeg", "77", "Taylor Lewan", "OL"); 
+    footballPlayerPic taylor = new footballPlayerPic ("img/taylor.jpeg", "77", "Taylor Lewan", "OL", "TaylorLewan77"); 
     roster.add(taylor);
     footballPlayerPic erik = new footballPlayerPic ("img/erik.jpeg", "78", "Erik Magnuson", "OL"); 
     roster.add(erik);

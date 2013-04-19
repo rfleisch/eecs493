@@ -22,12 +22,12 @@ public class hockeyRoster
     hockeyPlayerPic sinelli = new hockeyPlayerPic("img/sinelli.jpeg", "17", "Andrew Sinelli", "F");
     hockeyPlayerPic copp = new hockeyPlayerPic( "img/copp.jpeg", "18", "Andrew Copp", "F");
     hockeyPlayerPic deblois = new hockeyPlayerPic("img/deblois.jpeg", "19", "Derek DeBlois", "F");
-    hockeyPlayerPic tlynch = new hockeyPlayerPic("img/tlynch.jpeg", "20", "Travis Lynch", "F");
+    hockeyPlayerPic tlynch = new hockeyPlayerPic("img/tlynch.jpeg", "20", "Travis Lynch", "F", "TravisLynch20");
     hockeyPlayerPic rohr = new hockeyPlayerPic( "img/rohr.jpeg", "22", "Jeff Rohrkemper", "F");
     hockeyPlayerPic aj = new hockeyPlayerPic("img/aj.jpeg", "23", "A.J. Treais", "F");
     hockeyPlayerPic merrill = new hockeyPlayerPic("img/merrill.jpeg", "24", "Jon Merrill", "D");
     hockeyPlayerPic szuma = new hockeyPlayerPic( "img/szuma.jpeg", "26", "Mike Szuma", "D");
-    hockeyPlayerPic guptill = new hockeyPlayerPic("img/guptill.jpeg", "27", "Alex Guptill", "F");
+    hockeyPlayerPic guptill = new hockeyPlayerPic("img/guptill.jpeg", "27", "Alex Guptill", "F", "alexguptill");
     hockeyPlayerPic rut = new hockeyPlayerPic("img/rut.jpeg", "28", "Jared Rutledge", "G");
     hockeyPlayerPic dwyer = new hockeyPlayerPic( "img/dwyer.jpeg", "29", "Luke Dwyer", "G");
     hockeyPlayerPic janecyk = new hockeyPlayerPic("img/jan.jpeg", "30", "Adam Janecyk", "G");

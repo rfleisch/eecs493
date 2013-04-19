@@ -58,110 +58,122 @@ public class TwitterTimeline extends JPanel
     
     private int pageNumber = 1;             // the current page displayed
     private String username;
+    public static int pageSize;             // the number of tweets per page
     private int textWidth = 140;            // we know a tweet is at most 140 characters
     
     
-    public TwitterTimeline(String u)
+    public TwitterTimeline(String u, boolean isFullSize)
     {
-        this.setPreferredSize(new Dimension(400, 460));
+        this.setPreferredSize(new Dimension(350, isFullSize ? 460 : 290));
+        pageSize = isFullSize ? 10 : 5;
         username = u;
         System.out.println("twitter timeline created");
         
-        // Initialize the header
-        JPanel header = new JPanel();
-        header.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
         User user = twitterUISetup.getUser(username);
-
-        try
+        
+        if (user != null)
         {
-            JLabel image = new JLabel(new ImageIcon(new URL(user.getProfileImageURL())));
-            constraints.gridheight = 3;
-            //constraints.fill = GridBagConstraints.VERTICAL;
-            constraints.gridx = 0;
-            constraints.gridy = 0;
-            header.add(image, constraints);
+            // Initialize the header
+            JPanel header = new JPanel();
+            header.setLayout(new GridBagLayout());
+            GridBagConstraints constraints = new GridBagConstraints();
             
-            header.setPreferredSize(new Dimension(this.getPreferredSize().width,
-                    image.getIcon().getIconHeight()));
-        }
-        catch (MalformedURLException e)
-        {
-            twitterUISetup.showErrorMessage("Error loading profile image: " + e.getMessage());
-        }
-        
-        JLabel name = new JLabel(user.getName());
-        name.setFont(heading);
-        constraints.gridheight = 1;
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        constraints.insets = new Insets(0,10,0,30);
-        constraints.anchor = GridBagConstraints.FIRST_LINE_START;
-        header.add(name, constraints);
-        
-        JLabel screenname = new JLabel("@" + user.getScreenName());
-        screenname.setFont(detail);
-        screenname.setForeground(Color.GRAY);
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        constraints.anchor = GridBagConstraints.LINE_START;
-        header.add(screenname, constraints);
-        
-        boolean isFollowing = twitterUISetup.isFollowingUser(username);
-        final JButton follow = new JButton(isFollowing ? "Following" : "Follow   ");
-        follow.setEnabled(!isFollowing);
-        follow.setIcon(new ImageIcon("img/twitterBlueBird_16.png"));
-        follow.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e)
+            try
             {
-                boolean isFollowing = twitterUISetup.followUser(username);
-                follow.setText(isFollowing ? "Following" : "Follow   ");
-                follow.setEnabled(!isFollowing);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent arg0) {
-                // TODO Auto-generated method stub
+                JLabel image = new JLabel(new ImageIcon(new URL(user.getProfileImageURL())));
+                constraints.gridheight = 3;
+                //constraints.fill = GridBagConstraints.VERTICAL;
+                constraints.gridx = 0;
+                constraints.gridy = 0;
+                header.add(image, constraints);
                 
+                header.setPreferredSize(new Dimension(this.getPreferredSize().width,
+                        image.getIcon().getIconHeight()));
             }
-
-            @Override
-            public void mouseExited(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-                
+            catch (MalformedURLException e)
+            {
+                twitterUISetup.showErrorMessage("Error loading profile image: " + e.getMessage());
             }
-
-            @Override
-            public void mousePressed(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-                
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent arg0) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
-        constraints.gridx = 2;
-        constraints.gridy = 0;
-        constraints.anchor = GridBagConstraints.FIRST_LINE_END;
-        header.add(follow, constraints);
-        
-        this.add(header);
-        
-        // Initialize the twitter feed
-        timeline = new JPanel();
-        timeline.setLayout(new BoxLayout(timeline, BoxLayout.PAGE_AXIS));
-        SetTextWidth();
-        GetNextTweets();
-        JScrollPane scrollArea = new JScrollPane(timeline,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollArea.setPreferredSize(new Dimension(this.getPreferredSize().width,
-                this.getPreferredSize().height - header.getPreferredSize().height - 10));
-        this.add(scrollArea);
+            
+            JLabel name = new JLabel(user.getName());
+            name.setFont(heading);
+            constraints.gridheight = 1;
+            constraints.gridx = 1;
+            constraints.gridy = 0;
+            constraints.insets = new Insets(0,10,0,30);
+            constraints.anchor = GridBagConstraints.FIRST_LINE_START;
+            header.add(name, constraints);
+            
+            JLabel screenname = new JLabel("@" + user.getScreenName());
+            screenname.setFont(detail);
+            screenname.setForeground(Color.GRAY);
+            constraints.gridx = 1;
+            constraints.gridy = 1;
+            constraints.anchor = GridBagConstraints.LINE_START;
+            header.add(screenname, constraints);
+            
+            boolean isFollowing = twitterUISetup.isFollowingUser(username);
+            final JButton follow = new JButton(isFollowing ? "Following" : "Follow   ");
+            follow.setEnabled(!isFollowing);
+            follow.setIcon(new ImageIcon("img/twitterBlueBird_16.png"));
+            follow.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e)
+                {
+                    boolean isFollowing = twitterUISetup.followUser(username);
+                    follow.setText(isFollowing ? "Following" : "Follow   ");
+                    follow.setEnabled(!isFollowing);
+                }
+    
+                @Override
+                public void mouseEntered(MouseEvent arg0) {
+                    // TODO Auto-generated method stub
+                    
+                }
+    
+                @Override
+                public void mouseExited(MouseEvent arg0) {
+                    // TODO Auto-generated method stub
+                    
+                }
+    
+                @Override
+                public void mousePressed(MouseEvent arg0) {
+                    // TODO Auto-generated method stub
+                    
+                }
+    
+                @Override
+                public void mouseReleased(MouseEvent arg0) {
+                    // TODO Auto-generated method stub
+                    
+                }
+            });
+            constraints.gridx = 2;
+            constraints.gridy = 0;
+            constraints.anchor = GridBagConstraints.FIRST_LINE_END;
+            header.add(follow, constraints);
+            
+            this.add(header);
+            
+            // Initialize the twitter feed
+            timeline = new JPanel();
+            timeline.setLayout(new BoxLayout(timeline, BoxLayout.PAGE_AXIS));
+            SetTextWidth();
+            GetNextTweets();
+            JScrollPane scrollArea = new JScrollPane(timeline,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            scrollArea.setPreferredSize(new Dimension(this.getPreferredSize().width,
+                    this.getPreferredSize().height - header.getPreferredSize().height - 10));
+            this.add(scrollArea);
+        }
+        else
+        {
+            System.out.println("'" + username + "' not found");
+            JLabel notFound = new JLabel("Sorry, this user was not found on twitter.");
+            this.add(notFound);
+        }
     }
     
  // Calculate approx. max width of characters in a tweet
@@ -201,7 +213,7 @@ public class TwitterTimeline extends JPanel
             }
         });
         
-        twitter.getUserTimeline(username, new Paging(pageNumber++, twitterUISetup.pageSize));
+        twitter.getUserTimeline(username, new Paging(pageNumber++, pageSize));
     }
     
     public void OnGotUserTimeline(ResponseList<Status> statuses)
