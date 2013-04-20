@@ -204,7 +204,6 @@ public class MainWindow extends JDialog
           //twitter = new twitterUISetup();
           //window.add(twitter, BorderLayout.CENTER);
           graphView = new TwitterGraph(); 
-          graphView.getGraphByUser("davidnows");
           //fv.setPreferredSize(new Dimension( 400, 470));
           window.add(graphView, BorderLayout.CENTER);
           
