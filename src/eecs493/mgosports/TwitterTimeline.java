@@ -11,20 +11,15 @@ import twitter4j.TwitterMethod;
 import twitter4j.User;
 
 import java.text.DateFormatSymbols;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -38,17 +33,15 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JTextField;
-import javax.swing.JList;
-import javax.swing.ImageIcon;
-import javax.swing.event.ChangeListener;
 
 public class TwitterTimeline extends JPanel
 {
+    private static final Color Blue = new Color(58, 94, 140);
+    private static final Color Maize = new Color(246, 213, 101);
+    
     private JPanel timeline;
     private JPanel loadMore;
     
@@ -60,9 +53,6 @@ public class TwitterTimeline extends JPanel
     private String username;
     public static int pageSize;             // the number of tweets per page
     private int textWidth = 140;            // we know a tweet is at most 140 characters
-    
-    private Color blue = new Color(0,0,128);
-    private Color yellow = new Color(255,215,0);
     
     
     public TwitterTimeline(String u, boolean isFullSize)
@@ -85,9 +75,11 @@ public class TwitterTimeline extends JPanel
             {
                 JLabel image = new JLabel(new ImageIcon(new URL(user.getProfileImageURL())));
                 constraints.gridheight = 3;
-                //constraints.fill = GridBagConstraints.VERTICAL;
+                constraints.fill = GridBagConstraints.VERTICAL;
                 constraints.gridx = 0;
                 constraints.gridy = 0;
+                //constraints.insets = new Insets(2, 10, 2, 0);
+                constraints.anchor = GridBagConstraints.FIRST_LINE_START;
                 header.add(image, constraints);
                 
                 header.setPreferredSize(new Dimension(this.getPreferredSize().width,
@@ -109,7 +101,7 @@ public class TwitterTimeline extends JPanel
             
             JLabel screenname = new JLabel("@" + user.getScreenName());
             screenname.setFont(detail);
-            screenname.setForeground(Color.GRAY);
+            screenname.setForeground(Blue);
             constraints.gridx = 1;
             constraints.gridy = 1;
             constraints.anchor = GridBagConstraints.LINE_START;
@@ -155,6 +147,7 @@ public class TwitterTimeline extends JPanel
             constraints.gridx = 2;
             constraints.gridy = 0;
             constraints.anchor = GridBagConstraints.FIRST_LINE_END;
+            constraints.insets = new Insets(0,0,0,0);
             header.add(follow, constraints);
             
             this.add(header);
@@ -179,10 +172,10 @@ public class TwitterTimeline extends JPanel
         }
     }
     
- // Calculate approx. max width of characters in a tweet
+    // Calculate approx. max width of characters in a tweet
     private void SetTextWidth()
     {
-        textWidth = 40;
+        textWidth = 35;
         
         /*int charWidth = getFontMetrics(detail).stringWidth("W");
         
@@ -226,9 +219,11 @@ public class TwitterTimeline extends JPanel
         if (loadMore == null)
         {
             loadMore = new JPanel();
+            loadMore.setBackground(Blue);
             loadMore.setSize(timeline.getWidth(), 20);
             final JLabel loadText = new JLabel("Load more");
             loadText.setFont(body);
+            loadText.setForeground(Maize);
             loadMore.add(loadText);
             
             loadMore.addMouseListener(new MouseAdapter() {
@@ -251,7 +246,7 @@ public class TwitterTimeline extends JPanel
                 @Override
                 public void mouseExited(MouseEvent e)
                 {
-                    loadText.setForeground(Color.BLACK);
+                    loadText.setForeground(Maize);
                 }
             });
         }
@@ -267,6 +262,7 @@ public class TwitterTimeline extends JPanel
             
             JPanel tweet = new JPanel();
             tweet.setLayout(new GridBagLayout());
+            tweet.setBackground(Color.WHITE);
             GridBagConstraints constraints = new GridBagConstraints();
             JLabel text = new JLabel(FormatMultilineText(s.getText()));
             JLabel time = new JLabel(displayDate);
@@ -283,7 +279,7 @@ public class TwitterTimeline extends JPanel
             tweet.add(text, constraints);
             
             time.setFont(detail);
-            time.setForeground(Color.GRAY);
+            time.setForeground(Blue);
             constraints.gridheight = 1;
             constraints.gridwidth = 1;
             constraints.gridx = 2;
@@ -294,7 +290,7 @@ public class TwitterTimeline extends JPanel
             constraints.insets = new Insets(2, 5, 2, 10);
             tweet.add(time, constraints);
             
-            tweet.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+            tweet.setBorder(BorderFactory.createLineBorder(Blue));
             
             timeline.add(tweet);
         }
