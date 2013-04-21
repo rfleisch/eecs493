@@ -19,7 +19,7 @@ public class TwitterTweeter extends JPanel
   private Color blue = new Color(0,0,128);
   private Color yellow = new Color(255,215,0);
   
-  public TwitterTweeter(String sport)
+  public TwitterTweeter(final String sport)
   {
     //JPanel tweetPanel = new JPanel();
     setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
@@ -38,6 +38,7 @@ public class TwitterTweeter extends JPanel
         public void mouseClicked(MouseEvent e)
         {
             twitterUISetup.tweet(twitterTextBox.getText());
+            setTweetText(sport);
         }
 
         @Override

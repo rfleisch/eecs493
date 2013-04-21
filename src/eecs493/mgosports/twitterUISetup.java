@@ -242,6 +242,7 @@ public class twitterUISetup extends JPanel
         if (!isAuthorized())
             return false;
         
+        text = text.trim();
         String mGoSports = " #MGoSports";
         String mgs = " #MGS";
         
