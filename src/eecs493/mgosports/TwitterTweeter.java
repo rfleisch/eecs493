@@ -3,12 +3,15 @@ package eecs493.mgosports;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,8 +29,30 @@ public class TwitterTweeter extends JPanel
     setBackground(yellow);
     setOpaque(true);
     setPreferredSize(new Dimension(590, 50));
+    twitterTextBox.addFocusListener(new FocusListener() {
+        @Override
+        public void focusGained(FocusEvent arg0)
+        {
+            System.out.println("select");
+            
+            if (Color.GRAY == twitterTextBox.getForeground())
+            {
+                twitterTextBox.setText("");
+                twitterTextBox.setForeground(Color.BLACK);
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent arg0)
+        {
+            System.out.println("deselect");
+            if (twitterTextBox.getText().trim().isEmpty())
+                setTweetDescription(sport);
+        }
+        
+    });
     
-    setTweetText(sport);
+    setTweetDescription(sport);
     ImageIcon bird = new ImageIcon("medBlueBird.png");
     JLabel twitterLogo = new JLabel(bird);
     
@@ -37,8 +62,12 @@ public class TwitterTweeter extends JPanel
         @Override
         public void mouseClicked(MouseEvent e)
         {
-            twitterUISetup.tweet(twitterTextBox.getText());
-            setTweetText(sport);
+            if (twitterUISetup.tweet(twitterTextBox.getText()))
+            {
+                JOptionPane.showMessageDialog(null, "Twitter status updated successfully!",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
+                setTweetDescription(sport);
+            }
         }
 
         @Override
@@ -71,8 +100,9 @@ public class TwitterTweeter extends JPanel
     add(btnTweet); 
   }
   
-  public void setTweetText(String title_)
+  public void setTweetDescription(String title_)
   {  
+      twitterTextBox.setForeground(Color.GRAY);
     if(title_.compareTo("hockey") == 0)
     {
       twitterTextBox.setText("Tweet about Michigan Hockey!");
