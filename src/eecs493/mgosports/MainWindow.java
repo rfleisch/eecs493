@@ -49,6 +49,15 @@ public class MainWindow extends JDialog
     favHock = false;
     favFoot = false;
     selectedTab = "favorite";
+    
+    try
+    {
+    	UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+    }
+    catch (Exception e)
+    {
+    	e.printStackTrace();
+    }
 
     
     window = new JFrame("MGoSports");
@@ -111,7 +120,7 @@ public class MainWindow extends JDialog
     //starLabelFav = new JLabel(yellowStar);
     //favPanel.add(starLabelFav);
     
-    fav = new JLabel("Favorite", JLabel.CENTER);
+    fav = new JLabel("My Profile", JLabel.CENTER);
     fav.setFont(new Font("Arial", Font.BOLD, 14));
     fav.setHorizontalAlignment(4);
     fav.setForeground(Color.black);
@@ -195,7 +204,6 @@ public class MainWindow extends JDialog
           //twitter = new twitterUISetup();
           //window.add(twitter, BorderLayout.CENTER);
           graphView = new TwitterGraph(); 
-          graphView.getGraphByUser("davidnows");
           //fv.setPreferredSize(new Dimension( 400, 470));
           window.add(graphView, BorderLayout.CENTER);
           

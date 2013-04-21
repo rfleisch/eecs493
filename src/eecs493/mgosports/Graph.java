@@ -52,15 +52,6 @@ public class Graph {
     g2.fillRect(0, 0, WIDTH, HEIGHT);
     drawLines(data);
     drawAxis(data);
-    try
-    {
-      File file = new File("H:/graph.png");
-      ImageIO.write(image, "png", file);
-    }
-    catch (Exception e)
-    {
-      System.out.println(e.getMessage());
-    }
     return image;
   }
 

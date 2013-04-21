@@ -134,6 +134,7 @@ public class sportsView extends JPanel
     
 
     JTable table = new JTable(data, columns);
+    table.setEnabled(false);
     table.setPreferredSize(new Dimension(300, 470));
     
     JScrollPane scrollPane = new JScrollPane(table);
@@ -146,7 +147,6 @@ public class sportsView extends JPanel
   public void rosterTabSetup(String[] columns, Object[][] data) {
     
     final JTable tableRoster = new JTable(data, columns);
-
   
     JScrollPane scrollPane = new JScrollPane(tableRoster);
     tableRoster.setFillsViewportHeight(true);

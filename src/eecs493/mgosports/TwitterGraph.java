@@ -11,12 +11,22 @@ import twitter4j.Paging;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 
 public class TwitterGraph extends JPanel
 {
@@ -24,46 +34,61 @@ public class TwitterGraph extends JPanel
    * 
    */
   private static final long serialVersionUID = 3721139679703987701L;
-  private BufferedImage graph;
-  int[] dailyCount;
+  private static final Color YELLOW = new Color(255,215,0);
+  private ChartPanel chartPanel;
+  double[][] dailyCount;
   
   public TwitterGraph()
   {
-    dailyCount = new int[31];
+    dailyCount = new double[1][31];
     for (int i = 0; i < 31; ++i)
-      dailyCount[i] = 0;
+      dailyCount[0][i] = 0.0;
     buildUI();
   }
 
-  @Override
-  public Dimension getPreferredSize()
-  {
-    return graph == null ? super.getPreferredSize() : new Dimension(graph.getWidth(), graph.getHeight());
-  }
-  
-  @Override
-  protected void paintComponent(Graphics g)
-  {
-    super.paintComponent(g);
-    if (graph !=  null)
-    {
-      int x = (getWidth() - graph.getWidth()) / 2;
-      int y = (getHeight() - graph.getHeight()) / 2;
-      g.drawImage(graph, x, y, this);
-    }
-  }
-  
   private void buildUI()
   {
-    Color yellow = new Color(255,215,0);
-    setBackground(yellow);
-    updateGraph();
-  }
-  
-  private void updateGraph()
-  {
-    graph = Graph.getGraph(dailyCount);
-    setSize(graph.getWidth(), graph.getHeight());
+	  this.setBackground(YELLOW);
+	  JPanel mainFrame = new JPanel();
+	  mainFrame.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	  mainFrame.setBackground(YELLOW);
+	  mainFrame.setLayout(new BorderLayout());
+	  JLabel userLabel = new JLabel();
+	  Font font = new Font("Arial", Font.BOLD, 30);
+	  userLabel.setFont(font);
+	  
+	  if (twitterUISetup.isAuthorized())
+	  {
+		  try
+		  {
+			  Twitter twitter = twitterUISetup.getTwitter();
+			  String username = twitter.getScreenName();
+			  userLabel.setText("My Profile");
+			  
+			  mainFrame.add(userLabel, BorderLayout.NORTH);
+			  
+			  JPanel userDataPanel = new JPanel(new BorderLayout());
+			  
+			  this.getGraphByUser(username);
+			  userDataPanel.add(chartPanel, BorderLayout.EAST);
+			  JPanel tweets = new JPanel();
+			  tweets.setPreferredSize(new Dimension(350, 470));
+			  TwitterTimeline timeline = new TwitterTimeline(username, true);
+			  tweets.add(timeline);
+			  userDataPanel.add(tweets, BorderLayout.WEST);
+			  mainFrame.add(userDataPanel, BorderLayout.SOUTH);
+		  }
+		  catch (TwitterException e)
+		  {
+			  e.getStackTrace();
+		  }
+	  }
+	  else
+	  {
+		  userLabel.setText("Please Sign in to Twitter");
+		  mainFrame.add(userLabel, BorderLayout.NORTH);
+	  }
+	  this.add(mainFrame, BorderLayout.CENTER);
   }
   
   public void getGraphByUser(String username)
@@ -82,7 +107,7 @@ public class TwitterGraph extends JPanel
       
       // Reset the count
       for (int i = 0; i < 31; ++i)
-        dailyCount[i] = 0;
+        dailyCount[0][i] = 0.0;
       for (Status status : statuses)
       {
         // Break if the tweet was outside of last month
@@ -94,12 +119,11 @@ public class TwitterGraph extends JPanel
             / (1000 * 60 * 60 * 24) );
         
         // Increase the count in dailyCount
-        ++dailyCount[diffInDays];
+        dailyCount[0][diffInDays] += 1.0;
       }
       
       // Update the graph
-      updateGraph();
-      
+      chartPanel = Chart.createChartPanel(dailyCount);
     }
     catch(TwitterException e)
     {
