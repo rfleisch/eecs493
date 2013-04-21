@@ -120,7 +120,7 @@ public class MainWindow extends JDialog
     //starLabelFav = new JLabel(yellowStar);
     //favPanel.add(starLabelFav);
     
-    fav = new JLabel("Favorite", JLabel.CENTER);
+    fav = new JLabel("My Profile", JLabel.CENTER);
     fav.setFont(new Font("Arial", Font.BOLD, 14));
     fav.setHorizontalAlignment(4);
     fav.setForeground(Color.black);

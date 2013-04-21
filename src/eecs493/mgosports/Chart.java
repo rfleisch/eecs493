@@ -14,6 +14,8 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
 
 public class Chart {
+	
+	private static final Color YELLOW = new Color(255,215,0);
 
 	public static JFreeChart createChart(CategoryDataset dataset)
 	{
@@ -26,7 +28,6 @@ public class Chart {
 				false, //include legend
 				false, //tooltips
 				false);
-		chart.setBackgroundPaint(Color.white);
 		
 		CategoryPlot plot = chart.getCategoryPlot();
 		plot.setForegroundAlpha(0.5f);
@@ -38,7 +39,7 @@ public class Chart {
 		plot.setRangeGridlinePaint(Color.white);
 		plot.getDomainAxis().setTickLabelsVisible(false);
 		plot.getRangeAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-		//range.setVisible(false);
+		chart.setBackgroundPaint(YELLOW);
 		return chart;
 	}
 	
@@ -51,6 +52,7 @@ public class Chart {
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new Dimension(500, 270));
 		chartPanel.setEnforceFileExtensions(false);
+		chartPanel.setBackground(YELLOW);
 		return chartPanel;
 	}
 }

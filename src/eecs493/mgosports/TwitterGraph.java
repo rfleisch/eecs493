@@ -34,6 +34,7 @@ public class TwitterGraph extends JPanel
    * 
    */
   private static final long serialVersionUID = 3721139679703987701L;
+  private static final Color YELLOW = new Color(255,215,0);
   private ChartPanel chartPanel;
   double[][] dailyCount;
   
@@ -47,12 +48,10 @@ public class TwitterGraph extends JPanel
 
   private void buildUI()
   {
-	  //GridLayout mainLayout = new GridLayout(1,1);
-	  //this.setLayout(mainLayout);
-	  this.setBackground(new Color(255,215,0));
+	  this.setBackground(YELLOW);
 	  JPanel mainFrame = new JPanel();
 	  mainFrame.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-	  mainFrame.setBackground(Color.WHITE);
+	  mainFrame.setBackground(YELLOW);
 	  mainFrame.setLayout(new BorderLayout());
 	  JLabel userLabel = new JLabel();
 	  Font font = new Font("Arial", Font.BOLD, 30);
