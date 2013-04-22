@@ -71,6 +71,7 @@ public class MainWindow extends JDialog
     window.pack();
     window.setSize(1000,750);
     window.setVisible(true);
+    window.setMinimumSize(new Dimension(950, 700));
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
   }
   
