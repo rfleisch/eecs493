@@ -409,7 +409,7 @@ public class MainWindow extends JDialog
   
   public void createCenter() {
    graphView = new TwitterGraph();
-   graphView.getGraphByUser("davidnows");
+   //graphView.getGraphByUser("davidnows");
     window.add(graphView, BorderLayout.CENTER);
     
   }

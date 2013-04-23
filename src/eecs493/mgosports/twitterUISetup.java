@@ -346,4 +346,21 @@ public class twitterUISetup extends JPanel
     {
         return JOptionPane.showInputDialog(prompt);
     }
+    
+    public static String getScreenName()
+    {
+    	String name = "";
+    	if (isAuthorized())
+    	{
+    		try
+	    	{
+	    		name = getTwitter().getScreenName();
+	    	}
+	    	catch (TwitterException e)
+	    	{
+	    		e.getStackTrace();
+	    	}
+    	}
+    	return name;
+    }
 }

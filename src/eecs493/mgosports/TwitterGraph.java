@@ -1,12 +1,17 @@
 package eecs493.mgosports;
 
+import twitter4j.AsyncTwitter;
+import twitter4j.AsyncTwitterFactory;
+import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Paging;
+import twitter4j.TwitterMethod;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +32,9 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.general.DatasetUtilities;
 
 public class TwitterGraph extends JPanel
 {
@@ -48,6 +56,7 @@ public class TwitterGraph extends JPanel
 
   private void buildUI()
   {
+	  String username = twitterUISetup.getScreenName();
 	  this.setBackground(YELLOW);
 	  JPanel mainFrame = new JPanel();
 	  mainFrame.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -57,49 +66,27 @@ public class TwitterGraph extends JPanel
 	  Font font = new Font("Arial", Font.BOLD, 30);
 	  userLabel.setFont(font);
 	  
-	  if (twitterUISetup.isAuthorized())
-	  {
-		  try
-		  {
-			  Twitter twitter = twitterUISetup.getTwitter();
-			  String username = twitter.getScreenName();
-			  userLabel.setText("My Profile");
-			  
-			  mainFrame.add(userLabel, BorderLayout.NORTH);
-			  
-			  JPanel userDataPanel = new JPanel(new BorderLayout());
-			  
-			  this.getGraphByUser(username);
-			  userDataPanel.add(chartPanel, BorderLayout.EAST);
-			  JPanel tweets = new JPanel();
-			  tweets.setPreferredSize(new Dimension(350, 470));
-			  TwitterTimeline timeline = new TwitterTimeline(username, true);
-			  tweets.add(timeline);
-			  userDataPanel.add(tweets, BorderLayout.WEST);
-			  mainFrame.add(userDataPanel, BorderLayout.SOUTH);
-		  }
-		  catch (TwitterException e)
-		  {
-			  e.getStackTrace();
-		  }
-	  }
-	  else
-	  {
-		  userLabel.setText("Please Sign in to Twitter");
-		  mainFrame.add(userLabel, BorderLayout.NORTH);
-	  }
+	  chartPanel = Chart.createChartPanel(dailyCount);
+	  userLabel.setText("My Profile");
+	  
+	  mainFrame.add(userLabel, BorderLayout.NORTH);
+	  
+	  JPanel userDataPanel = new JPanel(new BorderLayout());
+	  
+	  userDataPanel.add(chartPanel, BorderLayout.EAST);
+	  JPanel tweets = new JPanel();
+	  tweets.setPreferredSize(new Dimension(350, 470));
+	  TwitterTimeline timeline = new TwitterTimeline(username, true);
+	  tweets.add(timeline);
+	  userDataPanel.add(tweets, BorderLayout.WEST);
+	  userLabel.setText((twitterUISetup.isAuthorized()) ? "My Profile" : "Please Sign in to Twitter!");
+	  mainFrame.add(userDataPanel, BorderLayout.SOUTH);
 	  this.add(mainFrame, BorderLayout.CENTER);
+	  this.loadGraphDataByUser();
   }
   
-  public void getGraphByUser(String username)
+  private void loadGraphByUser(ResponseList<Status> statuses)
   {
-    try
-    {
-      Twitter twitter = TwitterFactory.getSingleton();
-      
-      // Get the first 200 Tweets from User (limits me to 200)
-      List<Status> statuses = twitter.getUserTimeline(username, new Paging(1, 200));
-      
       // Set a calendar date for the last month
       Calendar counter = Calendar.getInstance();
       counter.add(Calendar.MONTH, -1);
@@ -121,33 +108,40 @@ public class TwitterGraph extends JPanel
         // Increase the count in dailyCount
         dailyCount[0][diffInDays] += 1.0;
       }
-      
-      // Update the graph
-      chartPanel = Chart.createChartPanel(dailyCount);
-    }
-    catch(TwitterException e)
-    {
-      e.printStackTrace();
-      //showErrorMessage("There was an error loading the graph data: " + e.getMessage());      
-    }    
+      JFreeChart chart = chartPanel.getChart();
+      CategoryPlot plot = chart.getCategoryPlot();
+	  CategoryDataset dataset = DatasetUtilities.createCategoryDataset(
+		    	"", "", dailyCount
+	  );
+      plot.setDataset(dataset);
   }
   
-  public void getGraphByHashtag(String hashtag)
+  private void loadGraphDataByUser()
   {
-    try
-    {
-      Twitter twitter = TwitterFactory.getSingleton();
-      Query query = new Query("#" + hashtag);
-      QueryResult result = twitter.search(query);
-      for (Status status : result.getTweets()) {
-          System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-      }
-    }
-    catch(TwitterException e)
-    {
-      e.printStackTrace();
-      //showErrorMessage("There was an error loading the graph data: " + e.getMessage());      
-    }
+	  if (twitterUISetup.isAuthorized())
+	  {
+		  String username = twitterUISetup.getScreenName();
+	      AsyncTwitterFactory factory = new AsyncTwitterFactory(twitterUISetup.config);
+	      AsyncTwitter twitter = factory.getInstance();
+	      twitter.addListener(new TwitterAdapter() {
+	          @Override
+	          public void gotUserTimeline(ResponseList<Status> statuses)
+	          {
+	        	  loadGraphByUser(statuses);
+	          }
+	          
+	          @Override
+	          public void onException(TwitterException e, TwitterMethod method)
+	          {
+	              System.out.println("Exception caught from twitter method '" +
+	                      method.toString() + "'");
+	              e.printStackTrace();
+	              twitterUISetup.showErrorMessage("Failed to get timeline: " + e.getMessage());
+	          }
+	      });
+	      
+	      twitter.getUserTimeline(username, new Paging(1, 200));
+	  }
   }
   
 }

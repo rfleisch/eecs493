@@ -63,6 +63,7 @@ public class TwitterTimeline extends JPanel
         System.out.println("twitter timeline created");
         
         User user = twitterUISetup.getUser(username);
+        String twitterUser = "";
         
         if (user != null)
         {
@@ -84,10 +85,16 @@ public class TwitterTimeline extends JPanel
                 
                 header.setPreferredSize(new Dimension(this.getPreferredSize().width,
                         image.getIcon().getIconHeight()));
+                
+                twitterUser = twitterUISetup.getTwitter().getScreenName();
             }
             catch (MalformedURLException e)
             {
                 twitterUISetup.showErrorMessage("Error loading profile image: " + e.getMessage());
+            }
+            catch (TwitterException e)
+            {
+            	twitterUISetup.showErrorMessage("Error finding signed in user credentials: " + e.getMessage());
             }
             
             JLabel name = new JLabel(user.getName());
@@ -110,6 +117,7 @@ public class TwitterTimeline extends JPanel
             boolean isFollowing = twitterUISetup.isFollowingUser(username);
             final JButton follow = new JButton(isFollowing ? "Following" : "Follow   ");
             follow.setEnabled(!isFollowing);
+            follow.setVisible(twitterUser.compareToIgnoreCase(username) != 0);
             follow.setIcon(new ImageIcon("img/twitterBlueBird_16.png"));
             follow.addMouseListener(new MouseListener() {
                 @Override
